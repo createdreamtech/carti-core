@@ -4,8 +4,7 @@
       - [Prerequisites](#prerequisites)
       - [Installation](#installation)
   - [Organization](#organization)
-    - [JSON-RPC API Documentation](#json-rpc-api-documentation)
-    - [Extending services](#extending-services)
+    - [Components](#components)
 - [Contributing](#contributing)
 - [Resources](#resources)
 
@@ -47,13 +46,6 @@ console.log(`Successful installation`)
 const files = fs.readdirSync(`./packages/${package.templateHash}`)
 console.log(files)
 ```
-
-To run the jade-service-runner:
-
-```shell
-jade-service-runner
-```
-
 ## Organization 
 ```
 src/
@@ -64,15 +56,16 @@ src/
 ├── packager
 └── storage
 ```
-### Decoders
+### Components
+#### Decoders
 Contains the code to define a decoder which can then resolve codecs specified by the package
-### Encoders
+#### Encoders
 Contains the code to encode data be that CBOR, BASE64, etc... 
-### Output 
+#### Output 
 Contains the code associated with installation and how the code should be written to disk
-### Packager
+#### Packager
 Contains the code that bundles together file based assets, encodes, and stores the data
-### Storage
+#### Storage
 Contains the code to store and retrieve data from storage be that Disk, Memory, IPFS, Git, S3
 
 ## Roadmap
