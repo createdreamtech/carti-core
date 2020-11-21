@@ -32,7 +32,7 @@ export function getLuaTableValues(node:any){
             }
             if(f.type === "TableValue"){
                 t = Array.isArray(t) ? t :  [] 
-                t.push(getLuaTableValues(f.value.raw))
+                t.push(getLuaTableValues(f.value))
             }
         })
         return t
