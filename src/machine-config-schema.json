@@ -6,6 +6,7 @@
     "$ref": "#/definitions/machineConfig",
     "definitions": {
       "machineConfig" : {
+          "title": "machineConfig",
         "type" : "object",
         "properties" : {
             "processor": {
@@ -15,7 +16,7 @@
                 "$ref": "#/definitions/ram"
             },
             "rom": {
-                "$ref": "#/defintions/rom"
+                "$ref": "#/definitions/rom"
             },
             "htif": {
                 "$ref": "#/definitions/htif"
@@ -26,7 +27,9 @@
             "flash_drive": {
                "$ref": "#/definitions/flash_drive"
             }
-        }
+        },
+        "required": ["processor", "ram", "rom", "htif", "clint", "flash_drive"],
+        "additionalProperties": false
       },
       "processor": {
           "type": "object",
@@ -129,7 +132,8 @@
             "scause","scounteren",
             "sepc","sscratch",
             "stval","stvec"
-          ]
+          ],
+          "additionalProperties": false
       },
       "ram": {
           "title": "ram",
@@ -140,17 +144,23 @@
               "image_filename": {
                   "type": "string"
               }
-          }
+          },
+          "required": ["length", "image_filename"],
+          "additionalProperties": false
       },
       "rom": {
+          "type": "object",
         "title": "rom",
         "properties": {
             "image_filename": {
                 "type":"string"
             }
-        }
+        },
+          "required": ["image_filename"],
+          "additionalProperties": false
       },
       "htif": {
+          "type": "object",
           "title":"htif",
           "properties": {
               "tohost": {
@@ -168,15 +178,20 @@
               "yield_rollup":{
                   "type": "boolean"
               }
-          }
+          },
+          "required": ["tohost","fromhost","console_getchar", "yield_progress", "yield_rollup"],
+          "additionalProperties": false
       },
       "clint":{
+          "type": "object",
           "title": "clint",
           "properties" :{
               "mtimecmp" : {
                   "$ref": "#/definitions/HexNumber"
               }
-          }
+          },
+          "required": ["mtimecmp"],
+          "additionalProperties": false
       },
       "flash_drive": {
           "title": "flash_drive",
@@ -186,6 +201,7 @@
           }
       },
       "Drive": {
+        "type": "object",
         "title":"drive",
         "properties": {
             "start": {
@@ -200,7 +216,9 @@
             "shared": {
                 "type": "boolean"
             }
-        }
+        },
+        "required": ["start","length","image_filename","shared"],
+        "additionalProperties": false
       },
       "x": {
           "type":"array",
