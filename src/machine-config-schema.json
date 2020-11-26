@@ -137,6 +137,7 @@
       },
       "ram": {
           "title": "ram",
+          "type": "object",
           "properties": {
               "length": {
                   "$ref" : "#/definitions/HexNumber"
