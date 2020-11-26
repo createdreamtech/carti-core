@@ -110,6 +110,9 @@
               "sepc": {
                   "$ref": "#/definitions/HexNumber"
               },
+              "sscratch": {
+                  "$ref": "#/definitions/HexNumber"
+              },
               "stval": {
                   "$ref": "#/definitions/HexNumber"
               },
@@ -155,9 +158,12 @@
         "properties": {
             "image_filename": {
                 "type":"string"
+            },
+            "bootargs": {
+                "type": "string"
             }
         },
-          "required": ["image_filename"],
+          "required": ["image_filename", "bootargs"],
           "additionalProperties": false
       },
       "htif": {

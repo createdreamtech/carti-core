@@ -164,6 +164,9 @@
               "sepc": {
                   "$ref": "#/definitions/HexNumber"
               },
+              "sscratch": {
+                  "$ref": "#/definitions/HexNumber"
+              },
               "stval": {
                   "$ref": "#/definitions/HexNumber"
               },
@@ -207,11 +210,14 @@
           "type": "object",
         "title": "rom",
         "properties": {
+           "bootargs": {
+            "type": "string"   
+           }, 
             "cid": {
                 "type":"string"
             }
         },
-          "required": ["cid"],
+          "required": ["cid", "bootargs"],
           "additionalProperties": false
       },
       "htif": {

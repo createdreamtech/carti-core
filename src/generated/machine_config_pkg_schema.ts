@@ -26,12 +26,17 @@ export interface Processor {
   scause: StringGuhVuclw;
   scounteren: StringGuhVuclw;
   sepc: StringGuhVuclw;
+  sscratch: StringGuhVuclw;
   stval: StringGuhVuclw;
   stvec: StringGuhVuclw;
 }
 export type StringDoaGddGA = string;
-export type Ram = any;
+export interface Ram {
+  length: StringGuhVuclw;
+  cid: StringDoaGddGA;
+}
 export interface Rom {
+  bootargs: StringDoaGddGA;
   cid: StringDoaGddGA;
 }
 export type BooleanVyG3AETh = boolean;
