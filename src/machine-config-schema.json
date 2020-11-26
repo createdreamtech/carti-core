@@ -221,6 +221,7 @@
         "additionalProperties": false
       },
       "x": {
+          "title": "x",
           "type":"array",
           "items":{
               "$ref": "#/definitions/HexNumber"

@@ -1,7 +1,7 @@
 export type StringGuhVuclw = string;
-export type UnorderedSetOfStringGuhVuclwzOcmv2QM = StringGuhVuclw[];
+export type X = StringGuhVuclw[];
 export interface Processor {
-  x: UnorderedSetOfStringGuhVuclwzOcmv2QM;
+  x: X;
   iflags: StringGuhVuclw;
   ilrsc: StringGuhVuclw;
   marchid: StringGuhVuclw;
