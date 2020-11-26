@@ -1,0 +1,289 @@
+{
+    "$id": "machine-config-package-schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Cartesi Machine Package Description",
+    "type": "object",
+    "$ref": "#/definitions/package",
+    "definitions": {
+      "package": {
+          "type": "object",
+          "title": "cartiPackage",
+          "properties": {
+              "machineConfig": {
+                  "$ref": "#/definitions/packageMachineConfig"
+              },
+              "assets": {
+                  "$ref": "#/definitions/assets"
+              },
+              "version": {
+                  "$ref": "#/definitions/version"
+              },
+              "metadata": {
+                  "$ref": "#/definitions/metadata"
+              }
+          },
+          "required": ["machineConfig", "assets", "version"]
+      },
+      "version": {
+          "title": "version"
+      },
+      "metadata": {
+          "type":"object",
+          "title": "metadata",
+          "properties": {
+              "projectName": {
+                  "title": "projectName",
+                  "type": "string"
+              }
+          }
+      },
+      "assets": {
+          "type": "array",
+          "title": "assets",
+          "items":{
+              "$ref": "#/definitions/asset"
+          }
+      },
+      "asset": {
+          "type": "object",
+          "title": "asset",
+          "properties": {
+              "name": {
+                  "title": "name",
+                  "type":"string"
+              },
+              "cid": {
+                  "title": "cid",
+                  "type": "string"
+              }
+          },
+          "required": ["name", "cid"]
+      },
+      "packageMachineConfig" : {
+        "title": "packageMachineConfig",
+        "type" : "object",
+        "properties" : {
+            "processor": {
+                "$ref": "#/definitions/processor"
+            },
+            "ram": {
+                "$ref": "#/definitions/ram"
+            },
+            "rom": {
+                "$ref": "#/definitions/rom"
+            },
+            "htif": {
+                "$ref": "#/definitions/htif"
+            },
+            "clint": {
+                "$ref": "#/definitions/clint"
+            },
+            "flash_drive": {
+               "$ref": "#/definitions/flash_drive"
+            }
+        },
+        "required": ["processor", "ram", "rom", "htif", "clint", "flash_drive"],
+        "additionalProperties": false
+      },
+      "processor": {
+          "type": "object",
+          "title": "processor",
+          "properties": {
+              "x" : {
+                  "$ref": "#/definitions/x"
+              },
+              "iflags": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "ilrsc": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "marchid": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "mcause": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "mcounteren": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "mcycle": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "medeleg": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "mepc": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "mideleg": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "mie": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "mimpid": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "minstret" : {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "mip": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "misa": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "mscratch": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "mstatus": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "mtval": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "mtvec": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "mvendorid": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "pc": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "satp": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "scause": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "scounteren": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "sepc": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "stval": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "stvec": {
+                  "$ref": "#/definitions/HexNumber"
+              }
+          },
+          "required": [
+            "x", "iflags",
+            "ilrsc","marchid",
+            "mcause","mcounteren",
+            "mcycle","medeleg",
+            "mepc","mideleg",
+            "mie","mimpid",
+            "minstret","mip",
+            "misa","mscratch",
+            "mstatus","mtval",
+            "mtvec","mvendorid",
+            "pc","satp",
+            "scause","scounteren",
+            "sepc","sscratch",
+            "stval","stvec"
+          ],
+          "additionalProperties": false
+      },
+      "ram": {
+          "title": "ram",
+          "properties": {
+              "length": {
+                  "$ref" : "#/definitions/HexNumber"
+              },
+              "cid": {
+                  "type": "string"
+              }
+          },
+          "required": ["length", "cid"],
+          "additionalProperties": false
+      },
+      "rom": {
+          "type": "object",
+        "title": "rom",
+        "properties": {
+            "cid": {
+                "type":"string"
+            }
+        },
+          "required": ["cid"],
+          "additionalProperties": false
+      },
+      "htif": {
+          "type": "object",
+          "title":"htif",
+          "properties": {
+              "tohost": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "fromhost": {
+                  "$ref": "#/definitions/HexNumber"
+              },
+              "console_getchar":{
+                  "type": "boolean"
+              },
+              "yield_progress":{
+                  "type": "boolean"
+              },
+              "yield_rollup":{
+                  "type": "boolean"
+              }
+          },
+          "required": ["tohost","fromhost","console_getchar", "yield_progress", "yield_rollup"],
+          "additionalProperties": false
+      },
+      "clint":{
+          "type": "object",
+          "title": "clint",
+          "properties" :{
+              "mtimecmp" : {
+                  "$ref": "#/definitions/HexNumber"
+              }
+          },
+          "required": ["mtimecmp"],
+          "additionalProperties": false
+      },
+      "flash_drive": {
+          "title": "flash_drive",
+          "type": "array",
+          "items": {
+              "$ref": "#/definitions/Drive"
+          }
+      },
+      "Drive": {
+        "type": "object",
+        "title":"drive",
+        "properties": {
+            "start": {
+                "$ref": "#/definitions/HexNumber"
+            },
+            "length": {
+                "$ref": "#/definitions/HexNumber"
+            },
+            "cid": {
+                "type": "string"
+            },
+            "shared": {
+                "type": "boolean"
+            }
+        },
+        "required": ["start","length","cid","shared"],
+        "additionalProperties": false
+      },
+      "x": {
+          "title": "x",
+          "type":"array",
+          "items":{
+              "$ref": "#/definitions/HexNumber"
+          }
+      },
+      "HexNumber": {
+          "type":"string",
+          "pattern": "^0x[a-fA-F\\d]+$"
+      }
+    }
+}
