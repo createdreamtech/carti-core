@@ -1,4 +1,4 @@
-import {hasher} from 'multiformats';  
+import { hasher } from "multiformats"
 import sha3, {Message} from 'js-sha3'
 
 type EncodingFn =( message: Message) => number[]

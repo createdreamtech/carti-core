@@ -1,24 +1,10 @@
-import { Hasher } from 'multiformats/hashes/hasher';
-import CID from 'multiformats/cid'
-
 //import raw from 'multiformats/codecs/raw'
-export interface EncodedDatum<T extends Uint8Array> {
-    cid: CID;
-    content: T;
-} 
+export { getEncoder, Encoder } from "./encoders"
+import { DataEncoder, EncodedDatum } from "./encoders"
+import { Hasher } from 'multiformats/hashes/hasher';
+import { CID } from 'multiformats'
 
-// EncodeWith is the public interface for encoding data, it's templated to take data in a format and function to encode it and hash it,
-// it returns the contentId and encodedData in an array
-export interface EncodeWith<T> {
-    (data: T, dataEncoder: (arg:T)=>Uint8Array, hasher: Hasher<string, number>): Promise<EncodedDatum<Uint8Array>>
-}
-// DataEncoder specifies the definition for a data encoding function
-export interface DataEncoder<T> {
-    (data: T): Uint8Array;
-}
-
-//TODO stronger typing with EncodeWith
-export async function inMemoryDataEncoder<T>(data:T, dataEncoder:DataEncoder<T>, hasher: Hasher<string,number>): Promise<EncodedDatum<Uint8Array>>
+export async function inMemoryDataEncoder<T>(data:T, dataEncoder:DataEncoder<T>, hasher: Hasher<string,number>): Promise<EncodedDatum>
 {
         const dataArray = dataEncoder(data);
         const hash = await hasher.encode(dataArray)
@@ -26,3 +12,15 @@ export async function inMemoryDataEncoder<T>(data:T, dataEncoder:DataEncoder<T>,
         const cid = CID.createV1(hasher.code, digest);
         return {cid, content:dataArray}
 }
+
+
+export const binaryDataEncoder= (data: string | Buffer): Uint8Array => {
+    if(typeof data === "string"){
+        return Buffer.from(data)
+    }
+    return data 
+}
+
+//export const binMemoryEncoder = getEncoder(inMemoryDataEncoder, binaryDataEncoder)
+
+//export async function binaryEncoder(data: Buffer | string, EncodeWith ){
