@@ -6,6 +6,8 @@ import { CID } from "multiformats";
 import fs from 'fs-extra';
 import Ajv from "ajv";
 import machinePackageSchema from '../machine-config-package-schema.json';
+import { Fetcher } from "../fetcher";
+import path from "path"
 
 
 const binMemEncoder = getEncoder(inMemoryDataEncoder,binaryDataEncoder)
@@ -18,7 +20,6 @@ const replaceFileName = (obj: any, cid: CID) => {
 const createAssetEntry = (fileName: string, cid: CID): pkgConfig.Asset =>{
     return {cid: cid.toString(), name: fileName}
 }
-
 
 export async function pack(config: machineConfig.MachineConfig, storage: Storage): Promise<pkgConfig.CartiPackage>{
     const writeAssetFromDisk = async (fileName: string) => {
@@ -60,9 +61,65 @@ export async function pack(config: machineConfig.MachineConfig, storage: Storage
     machineConfig.clint = tmpMachineConfig.clint;
     const ajv = new Ajv()
     const pkg = {assets, machineConfig, version}
-    console.log(JSON.stringify(pkg,null,2))
     const isValid = await ajv.validate(machinePackageSchema, pkg)
     if(!isValid)
         throw new Error(`Errors: ${JSON.stringify(ajv.errors)}`)
     return pkg
+}
+
+
+const DOCKER_CARTI_PACKAGES_BASE_PATH= "/opt/carti/packages"
+
+// cid to asset resolved container path
+type AssetLookup = { [cid: string]: string }
+
+function resolveNewMachineConfig(pkg: pkgConfig.CartiPackage, assetLookup: AssetLookup): machineConfig.MachineConfig{
+    //@ts-ignore
+    let machine:machineConfig.MachineConfig = { }
+    machine.clint = Object.assign({},pkg.machineConfig.clint)
+    machine.htif = Object.assign({},pkg.machineConfig.htif)
+    machine.processor = Object.assign({}, pkg.machineConfig.processor)
+    machine.ram =  {image_filename: assetLookup[pkg.machineConfig.ram.cid], length: pkg.machineConfig.ram.length}
+    machine.rom =  {image_filename: assetLookup[pkg.machineConfig.rom.cid], bootargs: pkg.machineConfig.rom.bootargs}
+    machine.flash_drive = pkg.machineConfig.flash_drive.map((drive)=>{
+        return {
+            image_filename: assetLookup[drive.cid],
+            length: drive.length,
+            shared: drive.shared,
+            start: drive.start
+        }
+    })
+    return machine
+}
+
+export async function install(pkg: pkgConfig.CartiPackage, fetcher: Fetcher, basePath: string): Promise<machineConfig.MachineConfig> {
+
+    const cidToAssetLookup:AssetLookup = {}
+    const packages = pkg.assets.map((asset)=>{
+        const cid = CID.parse(asset.cid)
+        return {cid, name:asset.name, data: fetcher.get(cid)}
+    })
+    const resolvedPackages = await Promise.all(packages)
+    const written = resolvedPackages.map(async (rp)=>{
+        const filename = path.basename(rp.name)
+        const dir = `${basePath}/${rp.cid.toString()}`
+        await fs.ensureDir(dir)
+        const fileLocation = `${dir}/${filename}`;
+        const data = await rp.data
+        const fws = fs.createWriteStream(fileLocation)
+        data.pipe(fws)
+        const prom = new Promise((resolve)=> {
+            data.on("end", ()=>{
+                fws.close() 
+            })
+            fws.on("close", ()=>{
+                resolve()
+            })
+            
+        })
+        cidToAssetLookup[rp.cid.toString()] = `${DOCKER_CARTI_PACKAGES_BASE_PATH}/${rp.cid.toString()}/${filename}`
+        return prom 
+    })
+    await Promise.all(written)
+    return resolveNewMachineConfig(pkg,cidToAssetLookup)
 }
