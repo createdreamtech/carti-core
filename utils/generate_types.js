@@ -1,6 +1,7 @@
 const JsonSchemaTranspiler = require("@json-schema-tools/transpiler").default;
 const machineConfigSchema = require("../src/machine-config-schema.json")
 const machinePackageSchema = require("../src/machine-config-package-schema.json")
+const mirrorConfigSchema = require("../src/mirror-config-schema.json")
 const Dereferencer = require("@json-schema-tools/dereferencer").default;
 const fs = require('fs-extra')
 
@@ -14,6 +15,7 @@ async function generate(fileName, schema) {
     try {
         await generate("./src/generated/machine_config_schema.ts", machineConfigSchema)
         await generate("./src/generated/machine_config_pkg_schema.ts", machinePackageSchema)
+        await generate("./src/generated/mirror_config_schema.ts", mirrorConfigSchema)
     } catch (e) {
         console.log(e)
     }

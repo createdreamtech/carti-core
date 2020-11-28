@@ -1,0 +1,33 @@
+{
+    "$id": "machine-config-schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Cartesi Machine Configuration",
+    "type": "object",
+    "$ref": "#/definitions/mirrorConfig",
+    "definitions": {
+        "mirrorConfig": {
+            "title": "MirrorConfig",
+            "type": "object",
+            "properties": {
+               "uri": {
+                   "$ref": "#/definitions/uri"
+               },
+               "locationType": {
+                   "$ref": "#/definitions/locationType"
+               } 
+            },
+            "additionalProperties": false,
+            "required": ["uri", "locationType"]
+        },
+        "uri" : {
+            "title": "uri",
+            "type": "string"
+        },
+        "locationType": {
+            "title": "locationType",
+            "type": "string",
+            "pattern": "^s3|disk|memory$"
+        }
+    }
+}
+ 
