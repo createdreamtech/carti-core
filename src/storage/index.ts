@@ -2,10 +2,16 @@
    to ensure cid, and content stored line up when storing the data
 i*/ 
 import { CID } from "multiformats";
-import {Encoder} from "../encoders"
-import {Readable} from "stream";
-import { StorageProvider } from "./provider"
-export class Storage {
+import { Encoder } from "../encoders"
+import { Readable } from "stream";
+import { Fetcher } from "../fetcher";
+import {StorageProvider} from "./provider"
+
+export { DiskProvider } from "./disk"
+export { MemoryProvider } from "./memory"
+export { StorageProvider } from "./provider"
+
+export class Storage implements Fetcher{
 
     provider: StorageProvider 
 
