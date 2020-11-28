@@ -20,7 +20,3 @@ export const binaryDataEncoder= (data: string | Buffer): Uint8Array => {
     }
     return data 
 }
-
-//export const binMemoryEncoder = getEncoder(inMemoryDataEncoder, binaryDataEncoder)
-
-//export async function binaryEncoder(data: Buffer | string, EncodeWith ){
