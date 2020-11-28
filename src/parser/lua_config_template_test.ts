@@ -21,7 +21,6 @@ describe("lua config template test", ()=>{
         const configFile = generateLuaConfig(machineConfigA)
         // write to disk
         const location = fs.mkdtempSync("machine-config")
-        console.log(location)
         await fs.writeFile(`${location}/lua_test.lua`, configFile)
         let machineConfigB = await parseLuaMachineConfig(fs.readFileSync(`${location}/lua_test.lua`).toString())
         expect(_.isEqual(machineConfigA,machineConfigB)).equal(true)
