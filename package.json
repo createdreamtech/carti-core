@@ -22,7 +22,9 @@
     "@types/chai": "^4.2.14",
     "@types/fs-extra": "^9.0.3",
     "@types/jest": "^26.0.14",
+    "@types/lodash": "^4.14.165",
     "@types/node": "^12.12.17",
+    "@types/rimraf": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
     "chai": "^4.2.0",
@@ -40,7 +42,9 @@
     "ajv": "^6.12.6",
     "fs-extra": "^9.0.1",
     "js-sha3": "^0.8.0",
+    "lodash": "^4.17.20",
     "luaparse": "^0.3.0",
-    "multiformats": "^4.3.4"
+    "multiformats": "^4.3.4",
+    "rimraf": "^2.6.3"
   }
 }
