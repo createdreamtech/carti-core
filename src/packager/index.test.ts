@@ -14,7 +14,7 @@ const testLua=fs.readFileSync(__dirname + "/../fixtures/parser/test_template_con
 
 
 //TODO fix test to not look for hardcoded template location
-describe.only("packing function test", ()=>{
+describe("packing function test", ()=>{
 
     //TODO needs better test to check correct pkg results 
     it("should package a MachineConfig return a package Object",async ()=>{
