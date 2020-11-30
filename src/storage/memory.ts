@@ -36,7 +36,7 @@ class MemoryStream extends Writable {
 export class MemoryProvider implements StorageProvider{
 
     storage:{[k:string]:Uint8Array} = {};
-    MemoryProvider(){
+    constructor(){
         this.storage = {}
     }
     async put(cid: CID, data: Uint8Array): Promise<any> {
