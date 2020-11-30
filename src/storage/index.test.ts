@@ -17,19 +17,21 @@ describe("test all providers", ()=>{
     let s3Provider;
     let storageDir: string;
     let providers: Array<StorageProvider>;
-    before(() => {
+    before(async () => {
         s3Provider = new S3Provider("accessKey",
             "secret",
             "region",
             "bucketName"
         )
         storageDir = fs.mkdtempSync(path.join(os.tmpdir(), 'tmp-carti-bucket'))
+        const diskStorageDir = `${storageDir}/disk-provider`
+        await fs.mkdirp(diskStorageDir);
         awsMock.config.basePath = storageDir 
             s3Provider.s3 = new awsMock.S3({
                 params: { Bucket: s3Provider.bucketName }
             })
 
-        providers = [new MemoryProvider(), s3Provider]
+        providers = [new MemoryProvider(), s3Provider, new DiskProvider(diskStorageDir)]
     })
     after(async ()=>{
         await rmAll(storageDir)
