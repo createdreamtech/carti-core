@@ -48,25 +48,72 @@ console.log(files)
 ```
 ## Organization 
 ```
-src/
-├── decoders
+.
 ├── encoders
+│   ├── encoders.ts
+│   ├── hashers.ts
+├── examples
+│   ├── README.md
+│   ├── generate_package.sh
+│   ├── index.ts
+│   └── run-config.lua
+├── fetcher
+│   ├── fetcher.ts
+│   ├── index.ts
+├── fixtures
+├── generated
+│   ├── machine_config_pkg_schema.ts
+│   ├── machine_config_schema.ts
+│   └── mirror_config_schema.ts
 ├── index.ts
-├── output
+├── machine-config-package-schema.json
+├── machine-config-schema.json
+├── mirror-config-schema.json
 ├── packager
+│   ├── index.ts
+│   ├── fetcher.ts
+│   └── utils.ts
+├── parser
+│   ├── index.ts
+│   ├── lua_config_template.ts
+│   ├── lua_config_template_test.ts
+│   ├── lua_parser.test.ts
+│   └── lua_parser.ts
 └── storage
+    ├── disk.ts
+    ├── index.ts
+    ├── memory.ts
+    ├── provider.ts
+    ├── s3.ts
+    └── util.ts
 ```
 ### Components
-#### Decoders
-Contains the code to define a decoder which can then resolve codecs specified by the package
 #### Encoders
 Contains the code to encode data be that CBOR, BASE64, etc... 
-#### Output 
-Contains the code associated with installation and how the code should be written to disk
 #### Packager
 Contains the code that bundles together file based assets, encodes, and stores the data
 #### Storage
 Contains the code to store and retrieve data from storage be that Disk, Memory, IPFS, Git, S3
+#### Fetcher
+Contains code to resolve package data from URI or other platform, which may or may not intersect with Storage
+i.e. HTTP might have fetcher and Storage may just implement retrieval from s3 api
+#### Parser
+Contains the code to parse lua config files and generate lua config files used to run cartesi machines
+#### Examples
+Contains an example of how this lib can be used to generate cartesi machines and package machine data
+#### Generated
+Contains code generated from the schemas that describe the various package formats
+#### Utils
+Contains code to generate tyepscript types from schemas and produces /generated
+#### *-schema.json
+##### machine-config-package-schema.json
+The schema for carti packages, includes separate section for managing assets and a format that links to them via CIDs it also includes some tenative metadata
+##### machine-config-schema.json
+The schema that directly translate cartesi machine configurations generated from the cartesi machine lua based output
+from dump-configuration
+##### mirror-config-schema.json
+A tenative description of the actual storage location of the package in question, with this file it becomes possible to
+describe where the package can expect to resolve the CIDs( content identifiers ) for the cartesi assets
 
 ## Roadmap
 
@@ -81,5 +128,5 @@ How to contribute, build and release are outlined in [CONTRIBUTING.md](CONTRIBUT
 Apache License 2.0
 
 ## Resources
-- [Carti.Specification](https://createdreamtech/carti-spec)
-- [Carti](https://github.com/createdreamtech/carti)
+- [Carti.Specification](https://createdreamtech/carti-spec)  - update coming soon
+- [Carti](https://github.com/createdreamtech/carti) - the cli package coming soon
