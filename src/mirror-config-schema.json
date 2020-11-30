@@ -26,7 +26,7 @@
         "locationType": {
             "title": "locationType",
             "type": "string",
-            "pattern": "^s3|disk|memory$"
+            "pattern": "^s3|disk|memory|http|https$"
         }
     }
 }
