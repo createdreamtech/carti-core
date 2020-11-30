@@ -9,6 +9,7 @@ import {StorageProvider} from "./provider"
 
 export { DiskProvider } from "./disk"
 export { MemoryProvider } from "./memory"
+export { S3Provider } from "./s3"
 export { StorageProvider } from "./provider"
 
 export class Storage implements Fetcher{
