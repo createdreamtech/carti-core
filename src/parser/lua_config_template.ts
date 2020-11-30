@@ -16,7 +16,7 @@ ${outerIndent}},
 }
 
 const machineTemplate =
-`machine_config = {
+`<%- templateSignature %> {
     processor = {
       x = {
 <% _.forEach(processor.x, function(register) { %>${(' ').repeat(8)}<%-register %>,\n<% }); %>
@@ -72,9 +72,15 @@ const machineTemplate =
     },
   }
 `
-
-
-export const generateLuaConfig = (config: MachineConfig): string => {
+const getTemplateSignature = (signatureType: LuaSignatureType) => {
+    if (signatureType === "assignment") {
+        return "machine_config ="
+    }
+    return "return"
+}
+type LuaSignatureType = "return" | "assignment"
+export const generateLuaConfig = (config: MachineConfig, sig:LuaSignatureType = "return"): string => {
+    const templateSignature = getTemplateSignature(sig)
     const compiled = _.template(machineTemplate);  
-    return compiled({...config, flashDriveTemplate})
+    return compiled({ ...config, flashDriveTemplate, templateSignature })
 }
