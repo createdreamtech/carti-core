@@ -29,9 +29,9 @@ export function remap(config: machineConfig.MachineConfig, pathMapping: PathMapp
 
     const newConfig = Object.assign({},config)
     Object.keys(pathMapping).forEach((p)=>{
-        newConfig.ram.image_filename.replace(p, pathMapping[p])
-        newConfig.rom.image_filename.replace(p, pathMapping[p])
-        newConfig.flash_drive.forEach((fd)=>fd.image_filename.replace(p, pathMapping[p]))
+        newConfig.ram.image_filename = newConfig.ram.image_filename.replace(p, pathMapping[p])
+        newConfig.rom.image_filename = newConfig.rom.image_filename.replace(p, pathMapping[p])
+        newConfig.flash_drive.forEach((fd)=>fd.image_filename = fd.image_filename.replace(p, pathMapping[p]))
     })
     return newConfig
 }
