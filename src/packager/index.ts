@@ -20,6 +20,21 @@ const replaceFileName = (obj: any, cid: CID) => {
 const createAssetEntry = (fileName: string, cid: CID): pkgConfig.Asset =>{
     return {cid: cid.toString(), name: fileName}
 }
+// A function to help with virtual remapping of directories in the case of packaging and the 
+// original context of the generated config file is different than where the assets are 
+// i.e. you aren't running this from the cartesi machine docker context 
+type PathMapping = { [p: string]: string }
+
+export function remap(config: machineConfig.MachineConfig, pathMapping: PathMapping): machineConfig.MachineConfig {
+
+    const newConfig = Object.assign({},config)
+    Object.keys(pathMapping).forEach((p)=>{
+        newConfig.ram.image_filename.replace(p, pathMapping[p])
+        newConfig.rom.image_filename.replace(p, pathMapping[p])
+        newConfig.flash_drive.forEach((fd)=>fd.image_filename.replace(p, pathMapping[p]))
+    })
+    return newConfig
+}
 
 export async function pack(config: machineConfig.MachineConfig, storage: Storage): Promise<pkgConfig.CartiPackage>{
     const writeAssetFromDisk = async (fileName: string) => {
