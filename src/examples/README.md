@@ -10,8 +10,11 @@ The script generate_package.sh preps a directory with the desired packages then 
 dumps this config to a file then packages it writing the package description to disk, and then installs it to another location and generates a another carti machine config file in a different directory. demonstrating what an installation looks like. 
 ### Usage
 ```sh
+git clone git@github.com:createdreamtech/carti-lib.git
+cd carti-lib
+npm install
 npm run build
-./generate_package.sh disk /path/to/installation/directory
+./src/examples/generate_package.sh disk /path/to/installation/directory
 or 
 #setup an s3 bucket and give the script your credentials
 AWS_REGION=xxx AWS_API_KEY=xxx AWS_SECRET_KEY=xxx BUCKET_NAME=bucket ./generate_package.sh s3 /path/to/installation/directory
