@@ -10,7 +10,7 @@ export async function getFetcherForConfig(mirrorConfig: MirrorConfig): Promise<F
         case "s3":
             return new Storage(new MemoryProvider())
         case "disk":
-            return new Storage(new DiskProvider())
+            return new Storage(new DiskProvider(mirrorConfig.uri))
         default:
             throw new Error("Could not resolve mirrorConfig to map to fetching interface")
     }
