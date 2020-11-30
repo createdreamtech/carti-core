@@ -17,4 +17,4 @@ echo "to use disk as backing store"
 echo "running: node build/src/examples/index.js ${STORAGE_TYPE} ${PWD} ${INSTALLATION_DIR}"
 RESULT=$(node ./build/src/examples/index.js ${STORAGE_TYPE} ${PACKAGE_EXAMPLE_DIR} ${INSTALLATION_DIR})
 echo "Execute the following command to run the machine just installed"
-echo $RESULT
+echo "$RESULT"
