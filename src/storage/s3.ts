@@ -35,7 +35,7 @@ export class S3Provider implements StorageProvider{
                 if(err)
                     error(err)
                 else
-                    resolve
+                    resolve()
             })
         })
     }

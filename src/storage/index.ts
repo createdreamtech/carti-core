@@ -22,7 +22,7 @@ export class Storage implements Fetcher{
 
     async put<T>(data: T, encoder: Encoder): Promise<CID> {
         const {cid, content} = await encoder(data)
-        this.provider.put(cid, content)
+        await this.provider.put(cid, content)
         return cid;
     }
     async get(cid: CID): Promise<Readable>{
