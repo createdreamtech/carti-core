@@ -44,7 +44,7 @@
                 "bundleType", 
                 "name", "version",
                 "fileName",
-                "deps","id"
+                "id"
             ],
             "additionalProperties": false
         },
