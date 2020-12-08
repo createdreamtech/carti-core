@@ -16,7 +16,7 @@ export interface Encoder {
 
 // DataEncoder specifies the definition for a data encoding function
 export interface DataEncoder<T> {
-    (data: T): Uint8Array;
+    (data: T): Promise<Uint8Array>;
 }
 
 // EncodeWith is a type for defining the composition of encoding functions
