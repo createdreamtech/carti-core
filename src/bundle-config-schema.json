@@ -1,0 +1,91 @@
+{
+    "$id": "bundle-config-schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "description": "Bundle Configuration Schema",
+    "type": "array",
+    "items": {
+        "$ref": "#/definitions/bundleConfig"
+    },
+    "definitions": {
+        "bundleConfig": {
+            "title": "bundleConfig",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/bundle"
+            }
+        },
+        "bundle": {
+            "title": "bundle",
+            "type": "object",
+            "properties": {
+                "bundleType": {
+                    "$ref": "#/definitions/bundleType"
+                },
+                "uri": {
+                    "$ref": "#/definitions/uri"
+                },
+                "name": {
+                    "$ref": "#/definitions/name"
+                },
+                "version": {
+                    "$ref": "#/definitions/version"
+                },
+                "fileName": {
+                    "$ref": "#/definitions/fileName"
+                },
+                "dataId": {
+                    "$ref": "#/definitions/dataId"
+                },
+                "deps": {
+                    "$ref": "#/definitions/deps"
+                },
+                "id": {
+                    "$ref": "#/definitions/id"
+                }
+            },
+            "required": [
+                "bundleType", "uri", 
+                "name", "version",
+                "fileName", "dataId",
+                "deps","id"
+            ],
+            "additionalProperties": false
+        },
+        "bundleType": {
+            "title": "bundleType",
+            "type": "string",
+            "pattern": "^ram|rom|raw$"
+        },
+        "name": {
+            "title": "name",
+            "type": "string"
+        },
+        "version": {
+            "title": "version",
+            "type": "string"
+        },
+        "fileName": {
+            "title": "fileName",
+            "type": "string"
+        },
+        "dataId": {
+            "title": "dataId",
+            "type": "string"
+        },
+        "deps": {
+            "title": "deps",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/id"
+            }
+        },
+        "id": {
+            "title": "id",
+            "type": "string"
+        },
+        "uri": {
+            "title": "uri",
+            "type": "string"
+        }
+    }
+}
