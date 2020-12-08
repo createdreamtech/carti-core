@@ -44,7 +44,7 @@
                 }
             },
             "required": [
-                "bundleType", "uri", 
+                "bundleType", 
                 "name", "version",
                 "fileName", "dataId",
                 "deps","id"
