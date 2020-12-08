@@ -33,9 +33,6 @@
                 "fileName": {
                     "$ref": "#/definitions/fileName"
                 },
-                "dataId": {
-                    "$ref": "#/definitions/dataId"
-                },
                 "deps": {
                     "$ref": "#/definitions/deps"
                 },
@@ -46,7 +43,7 @@
             "required": [
                 "bundleType", 
                 "name", "version",
-                "fileName", "dataId",
+                "fileName",
                 "deps","id"
             ],
             "additionalProperties": false
@@ -66,10 +63,6 @@
         },
         "fileName": {
             "title": "fileName",
-            "type": "string"
-        },
-        "dataId": {
-            "title": "dataId",
             "type": "string"
         },
         "deps": {
