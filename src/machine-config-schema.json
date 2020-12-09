@@ -28,7 +28,7 @@
                "$ref": "#/definitions/flash_drive"
             }
         },
-        "required": ["processor", "ram", "rom", "htif", "clint", "flash_drive"],
+        "required": ["ram", "rom", "flash_drive"],
         "additionalProperties": false
       },
       "processor": {
@@ -120,22 +120,7 @@
                   "$ref": "#/definitions/HexNumber"
               }
           },
-          "required": [
-            "x", "iflags",
-            "ilrsc","marchid",
-            "mcause","mcounteren",
-            "mcycle","medeleg",
-            "mepc","mideleg",
-            "mie","mimpid",
-            "minstret","mip",
-            "misa","mscratch",
-            "mstatus","mtval",
-            "mtvec","mvendorid",
-            "pc","satp",
-            "scause","scounteren",
-            "sepc","sscratch",
-            "stval","stvec"
-          ],
+          "required": [],
           "additionalProperties": false
       },
       "ram": {
