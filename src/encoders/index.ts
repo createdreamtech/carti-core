@@ -14,7 +14,7 @@ export async function inMemoryDataEncoder<T>(data:T, dataEncoder:DataEncoder<T>,
         return {cid, content:dataArray}
 }
 
-const readableByteStreamToBuffer = async (data: Readable): Promise<Uint8Array> => {
+export const readableByteStreamToBuffer = async (data: Readable): Promise<Uint8Array> => {
     let chunks: any = [];
     return new Promise((resolve) => {
 
