@@ -8,9 +8,9 @@ import Ajv from "ajv";
 import machinePackageSchema from '../machine-config-package-schema.json';
 import { Fetcher } from "../fetcher";
 import path from "path"
+import { binMemEncoder } from "./package_encoders";
 
 
-const binMemEncoder = getEncoder(inMemoryDataEncoder,binaryDataEncoder)
 
 const replaceFileName = (obj: any, cid: CID) => {
     const oo = Object.assign({}, obj, { cid: cid.toString()});
