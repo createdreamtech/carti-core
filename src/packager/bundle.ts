@@ -18,6 +18,7 @@ export interface BundleMeta {
     version: string
     bundleType: BundleType 
     deps?: Deps
+    uri?: string
     path: string
 }
 
