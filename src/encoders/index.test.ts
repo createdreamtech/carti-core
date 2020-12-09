@@ -9,7 +9,7 @@ import { assert } from "console"
 describe('encoders should encode data and yield cid', () => {
 
     it("should encode data in memory", async ()=>{
-        const {content, cid} = await inMemoryDataEncoder(Buffer.from("hello"),raw.encode, hashers.keccak256)
+        const {content, cid} = await inMemoryDataEncoder(Buffer.from("hello"),async (data)=>raw.encode(data), hashers.keccak256)
         assert(content.length === 5)
         assert(cid !== undefined)
         assert(raw.decode(content)=== Buffer.from("hello"))
