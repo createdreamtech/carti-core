@@ -36,14 +36,17 @@ class MemoryStream extends Writable {
 export class MemoryProvider implements StorageProvider{
 
     storage:{[k:string]:Uint8Array} = {};
+    metaStorage:{[k:string]: string} = {}
     constructor(){
         this.storage = {}
     }
-    async put(cid: CID, data: Uint8Array): Promise<any> {
+    async put(cid: CID, data: Uint8Array, metaData?:any): Promise<any> {
 //        const memory = new MemoryStream()
  //       data.pipe(memory)
 // memory.get()
         this.storage[cid.toString()] = data;
+        if(metaData && typeof metaData === "object")
+            this.metaStorage[cid.toString()]= JSON.stringify(metaData)
     }
 
     async get(cid: CID): Promise<Readable> {

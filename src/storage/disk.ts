@@ -9,8 +9,11 @@ export class DiskProvider implements StorageProvider{
     constructor(dir: string){
         this.basePath = dir
     }
-    async put(cid: CID, data: Uint8Array): Promise<any> {
-        return fs.writeFile(`${this.basePath}/${cid.toString()}`, data) 
+    async put(cid: CID, data: Uint8Array, metaData?: any): Promise<any> {
+        const path = `${this.basePath}/${cid.toString()}`
+        if(typeof metaData === "object")
+            await fs.writeJSON(`${path}/carti-meta.json`, metaData)
+        return fs.writeFile(`${path}`, data) 
     }
 
     async get(cid: CID): Promise<Readable> {

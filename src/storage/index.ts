@@ -20,13 +20,12 @@ export class Storage implements Fetcher{
         this.provider = provider;
     }
 
-    async put<T>(data: T, encoder: Encoder): Promise<CID> {
+    async put<T>(data: T, encoder: Encoder, metaData?: any): Promise<CID> {
         const {cid, content} = await encoder(data)
-        await this.provider.put(cid, content)
+        await this.provider.put(cid, content, metaData)
         return cid;
     }
     async get(cid: CID): Promise<Readable>{
         return this.provider.get(cid)
     }
-
 }
