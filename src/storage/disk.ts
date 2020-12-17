@@ -11,6 +11,7 @@ export class DiskProvider implements StorageProvider{
     }
     async put(cid: CID, data: Uint8Array, metaData?: any): Promise<any> {
         const path = `${this.basePath}/${cid.toString()}`
+        await fs.ensureDir(path)
         if(typeof metaData === "object")
             await fs.writeJSON(`${path}/carti-meta.json`, metaData)
         return fs.writeFile(`${path}`, data) 
