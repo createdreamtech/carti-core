@@ -2,13 +2,16 @@
     "$id": "bundle-config-schema.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "description": "Bundle Configuration Schema",
-    "type": "array",
-    "items": {
-        "$ref": "#/definitions/bundleConfig"
+    "type": "object",
+    "title": "bundleConfig",
+    "properties" : {
+       "bundles": {
+           "$ref": "#/definitions/bundles"
+       } 
     },
     "definitions": {
-        "bundleConfig": {
-            "title": "bundleConfig",
+        "bundles": {
+            "title": "bundles",
             "type": "array",
             "items": {
                 "$ref": "#/definitions/bundle"
@@ -51,7 +54,7 @@
         "bundleType": {
             "title": "bundleType",
             "type": "string",
-            "pattern": "^ram|rom|raw$"
+            "pattern": "^ram|rom|raw|flashdrive$"
         },
         "name": {
             "title": "name",
