@@ -14,10 +14,13 @@ export interface Bundle {
   deps?: Deps;
   id: Id;
 }
-export type BundleConfig = Bundle[];
+export type Bundles = Bundle[];
 /**
  *
  * Bundle Configuration Schema
  *
  */
-export type UnorderedSetOfBundleConfigDK4F1QvR = BundleConfig[];
+export interface BundleConfig {
+  bundles?: Bundles;
+  [k: string]: any;
+}
