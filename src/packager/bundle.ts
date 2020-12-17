@@ -11,7 +11,7 @@ import {readableByteStreamToBuffer} from "../encoders";
 // default location of ./.bundles/ . and uses disktorage interface to ensure
 // consistent representation of assets depending on the downstream use case
 
-type BundleType = "ram" | "rom" | "raw"
+type BundleType = "ram" | "rom" | "raw" |"flashdrive"
 
 export interface BundleMeta {
     name: string
