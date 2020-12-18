@@ -14,10 +14,10 @@ export class DiskProvider implements StorageProvider{
         await fs.ensureDir(path)
         if(typeof metaData === "object")
             await fs.writeJSON(`${path}/carti-meta.json`, metaData)
-        return fs.writeFile(`${path}`, data) 
+        return fs.writeFile(`${path}/${cid.toString()}`, data) 
     }
 
     async get(cid: CID): Promise<Readable> {
-        return fs.createReadStream(`${this.basePath}/${cid.toString()}`)
+        return fs.createReadStream(`${this.basePath}/${cid.toString()}/${cid.toString()}`)
     }
 }
