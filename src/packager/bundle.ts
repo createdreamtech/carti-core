@@ -25,7 +25,7 @@ export interface BundleMeta {
 export async function bundle(config: BundleMeta, storage:Storage): Promise<Bundle> {
     
    const file = await fs.readFile(config.path)
-   const cid = await storage.put(file, binMemEncoder)
+    const cid = await storage.put(file, binMemEncoder, config)
    const fileName = path.basename(config.path)
    return {
        bundleType: config.bundleType,
