@@ -18,6 +18,11 @@ export class DiskProvider implements StorageProvider{
     }
 
     async get(cid: CID): Promise<Readable> {
-        return fs.createReadStream(`${this.basePath}/${cid.toString()}/${cid.toString()}`)
+        return fs.createReadStream(this.path(cid))
     }
+
+    path(cid:CID): string {
+        return `${this.basePath}/${cid.toString()}/${cid.toString()}`
+    }
+
 }
