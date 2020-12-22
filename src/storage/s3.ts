@@ -7,12 +7,8 @@ export class S3Provider implements StorageProvider{
 
     s3!:S3
     bucketName!: string
-    constructor(accessKeyId:string, secretAccessKey:string, region:string, bucketName: string){
-        this.s3 = new S3({
-            accessKeyId,
-            secretAccessKey,
-            region
-        })
+    constructor(bucketName: string){
+        this.s3 = new S3()
         this.bucketName = bucketName
     }
     async get(cid: CID): Promise<Readable>{

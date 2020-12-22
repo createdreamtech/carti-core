@@ -18,9 +18,7 @@ describe("test all providers", ()=>{
     let storageDir: string;
     let providers: Array<StorageProvider>;
     before(async () => {
-        s3Provider = new S3Provider("accessKey",
-            "secret",
-            "region",
+        s3Provider = new S3Provider(
             "bucketName"
         )
         storageDir = fs.mkdtempSync(path.join(os.tmpdir(), 'tmp-carti-bucket'))
