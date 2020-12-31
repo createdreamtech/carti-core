@@ -186,7 +186,10 @@
               },
               "cid": {
                   "type": "string"
-              }
+              },
+              "resolvedPath": {
+                "type": "string"
+             }
           },
           "required": ["length", "cid"],
           "additionalProperties": false
@@ -200,6 +203,9 @@
            }, 
             "cid": {
                 "type":"string"
+            },
+            "resolvedPath": {
+                "type": "string"
             }
         },
           "required": ["cid", "bootargs"],
@@ -257,6 +263,9 @@
                 "$ref": "#/definitions/HexNumber"
             },
             "cid": {
+                "type": "string"
+            },
+            "resolvedPath": {
                 "type": "string"
             },
             "shared": {
