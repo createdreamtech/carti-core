@@ -95,11 +95,11 @@ function resolveNewMachineConfig(pkg: pkgConfig.CartiPackage, assetLookup: Asset
     machine.clint = Object.assign({},pkg.machineConfig.clint)
     machine.htif = Object.assign({},pkg.machineConfig.htif)
     machine.processor = Object.assign({}, pkg.machineConfig.processor)
-    machine.ram =  {image_filename: assetLookup[pkg.machineConfig.ram.cid], length: pkg.machineConfig.ram.length}
-    machine.rom =  {image_filename: assetLookup[pkg.machineConfig.rom.cid], bootargs: pkg.machineConfig.rom.bootargs}
+    machine.ram =  {image_filename: pkg.machineConfig.ram.resolvedPath || assetLookup[pkg.machineConfig.ram.cid], length: pkg.machineConfig.ram.length}
+    machine.rom =  {image_filename: pkg.machineConfig.ram.resolvedPath || assetLookup[pkg.machineConfig.rom.cid], bootargs: pkg.machineConfig.rom.bootargs}
     machine.flash_drive = pkg.machineConfig.flash_drive.map((drive)=>{
         return {
-            image_filename: assetLookup[drive.cid],
+            image_filename: drive.resolvedPath || assetLookup[drive.cid],
             length: drive.length,
             shared: drive.shared,
             start: drive.start
