@@ -1,5 +1,4 @@
 import { Storage } from "../storage" 
-import { getEncoder, inMemoryDataEncoder, binaryDataEncoder } from "../encoders" 
 import * as machineConfig from "../generated/machine_config_schema";
 import * as pkgConfig from "../generated/machine_config_pkg_schema";
 import { CID } from "multiformats";
@@ -9,6 +8,8 @@ import machinePackageSchema from '../machine-config-package-schema.json';
 import { Fetcher } from "../fetcher";
 import path from "path"
 import { binMemEncoder } from "./package_encoders";
+export * as bundle from "./bundle"
+export * from "./machine"
 
 
 
@@ -106,6 +107,8 @@ function resolveNewMachineConfig(pkg: pkgConfig.CartiPackage, assetLookup: Asset
     })
     return machine
 }
+
+
 
 export async function install(pkg: pkgConfig.CartiPackage, fetcher: Fetcher, basePath: string): Promise<machineConfig.MachineConfig> {
 
