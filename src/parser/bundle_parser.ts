@@ -1,7 +1,7 @@
 import Ajv from "ajv";
 import { Readable } from "stream";
 import bundleConfigSchema from "../bundle-config-schema.json";
-import {fromStreamToStr} from "../utils"
+import { fromStreamToStr } from "../utils"
 import { BundleConfig, Bundle } from "../generated/bundle_config_schema"
 import fs from "fs-extra"
 

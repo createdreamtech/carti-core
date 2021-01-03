@@ -1,22 +1,22 @@
 import { MachineConfig } from "../generated/machine_config_schema";
 import _ from "lodash";
 
-const flashDriveTemplate = (drive:any, indent=6):string => {
-const bodyIndent = ' '.repeat(indent + 2)
-const outerIndent = ' '.repeat(indent)
-const fdriveTemplate=`${outerIndent}{
+const flashDriveTemplate = (drive: any, indent = 6): string => {
+  const bodyIndent = ' '.repeat(indent + 2)
+  const outerIndent = ' '.repeat(indent)
+  const fdriveTemplate = `${outerIndent}{
 ${bodyIndent}start = <%- start %>,
 ${bodyIndent}length = <%- length %>,
 ${bodyIndent}image_filename = "<%- image_filename %>",
 ${bodyIndent}shared = <%- shared %>,
 ${outerIndent}},
 `
-    const compiled = _.template(fdriveTemplate)
-    return compiled(drive)
+  const compiled = _.template(fdriveTemplate)
+  return compiled(drive)
 }
-const condVarTemplate = (val:any, varName:string, indent = 0, quote=false): string => {
+const condVarTemplate = (val: any, varName: string, indent = 0, quote = false): string => {
   const bodyIndent = ' '.repeat(indent + 2)
-  const q= quote ? '"' : ""
+  const q = quote ? '"' : ""
   const value = `${bodyIndent}${varName} = ${q}<%- ${varName} %>${q},`
   const condTemplate = `
    <% if (typeof(${varName}) !== "undefined") {%>
@@ -24,13 +24,13 @@ const condVarTemplate = (val:any, varName:string, indent = 0, quote=false): stri
     <%}%>
   `
   const compiled = _.template(condTemplate)
-  const varMap:any = {} 
+  const varMap: any = {}
   varMap[varName] = val
   return compiled(varMap)
 }
 
 const machineTemplate =
-`<%- templateSignature %> {
+  `<%- templateSignature %> {
   <% if(typeof(processor) !== "undefined") {%>
     processor = {
       <% if(typeof(processor.x) !== "undefined") {%>
@@ -95,16 +95,18 @@ const machineTemplate =
   }
 `
 const getTemplateSignature = (signatureType: LuaSignatureType) => {
-    if (signatureType === "assignment") {
-        return "machine_config ="
-    }
-    return "return"
+  if (signatureType === "assignment") {
+    return "machine_config ="
+  }
+  return "return"
 }
 type LuaSignatureType = "return" | "assignment"
 
-export const generateLuaConfig = (config: MachineConfig, sig:LuaSignatureType = "return"): string => {
+// generateLuaConfig takes a MachineConfig object and a desired return output and generates a 
+// corresponding cartesi-machine configuration lua run script
+export const generateLuaConfig = (config: MachineConfig, sig: LuaSignatureType = "return"): string => {
 
-    const templateSignature = getTemplateSignature(sig)
-    const compiled = _.template(machineTemplate);  
-    return compiled({ ...config,flashDriveTemplate, condVarTemplate, templateSignature}).replace(/\s+\n/g,"\n")
+  const templateSignature = getTemplateSignature(sig)
+  const compiled = _.template(machineTemplate);
+  return compiled({ ...config, flashDriveTemplate, condVarTemplate, templateSignature }).replace(/\s+\n/g, "\n")
 }
