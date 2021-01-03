@@ -10,7 +10,8 @@ import rimraf from "rimraf"
 import util from "util"
 const rmAll = util.promisify(rimraf);
 
-const testLua = fs.readFileSync(__dirname + "/../fixtures/parser/test_template_config.lua")
+import {testTemplateLuaConfig} from "../parser/test_template_config";
+const testLua = testTemplateLuaConfig(`${__dirname}/../fixtures`)
 
 
 //TODO fix test to not look for hardcoded template location

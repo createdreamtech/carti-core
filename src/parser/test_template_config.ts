@@ -1,4 +1,5 @@
-machine_config = {
+export function testTemplateLuaConfig(basePath: string): string {
+  return `machine_config = {
     processor = {
       x = {
         0x0, -- default
@@ -63,10 +64,10 @@ machine_config = {
     },
     ram = {
       length = 0x4000000,
-      image_filename = "/Users/zcstarr/src/create_dream_tech/bounties/cartesi/carti-lib/src/fixtures/parser/cartesi/images/linux.bin",
+      image_filename = "${basePath}/parser/cartesi/images/linux.bin",
     },
     rom = {
-      image_filename = "/Users/zcstarr/src/create_dream_tech/bounties/cartesi/carti-lib/src/fixtures/parser/cartesi/images/rom.bin",
+      image_filename = "${basePath}/parser/cartesi/images/rom.bin",
       bootargs = "console=hvc0 rootfstype=ext2 root=/dev/mtdblock0 rw quiet mtdparts=flash.0:-(root) -- ls /bin",
     },
     htif = {
@@ -83,8 +84,9 @@ machine_config = {
       {
         start = 0x8000000000000000,
         length = 0x3c00000,
-        image_filename = "/Users/zcstarr/src/create_dream_tech/bounties/cartesi/carti-lib/src/fixtures/parser/cartesi/images/rootfs.ext2",
+        image_filename = "${basePath}/parser/cartesi/images/rootfs.ext2",
         shared = false, -- default
       },
     },
   }
+  `}
