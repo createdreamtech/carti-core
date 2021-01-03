@@ -1,5 +1,5 @@
 {
-  "name": "@createdreamtech/carti-lib",
+  "name": "@createdreamtech/carti-core",
   "version": "0.0.0-development",
   "description": "",
   "main": "build/src/index.js",
