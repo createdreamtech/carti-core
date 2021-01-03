@@ -34,10 +34,12 @@ export type StringDoaGddGA = string;
 export interface Ram {
   length: StringGuhVuclw;
   cid: StringDoaGddGA;
+  resolvedPath?: StringDoaGddGA;
 }
 export interface Rom {
   bootargs: StringDoaGddGA;
   cid: StringDoaGddGA;
+  resolvedPath?: StringDoaGddGA;
 }
 export type BooleanVyG3AETh = boolean;
 export interface Htif {
@@ -54,6 +56,7 @@ export interface Drive {
   start: StringGuhVuclw;
   length: StringGuhVuclw;
   cid: StringDoaGddGA;
+  resolvedPath?: StringDoaGddGA;
   shared: BooleanVyG3AETh;
 }
 export type FlashDrive = Drive[];
