@@ -17,36 +17,43 @@ export interface PackageEntryOptions {
     length?: string
     bootargs?: string
     shared?: boolean
+    resolvedPath?: string
 }
 
-// TODO might have misleading type definition
-export function addPackageEntry(b: Bundle, cfg: any, options: PackageEntryOptions = {}): CartiPackage {
+export interface BundleDesc {
+    id: string,
+    bundleType: string
+}
+
+
+export function addPackageEntry(b: Bundle | BundleDesc, cfg: any, options: PackageEntryOptions = {}): CartiPackage {
     if(!cfg || !cfg.assets || !cfg.machineConfig){
         throw new Error("malformed minimal configuration")
     }
-    cfg = addAsset(b.id, b.name, cfg)
-    return addBundle(b, cfg, options)
+    if(b.hasOwnProperty("name") === true)
+        cfg = addAsset(b.id, (b as Bundle).name, cfg)
+    return addBundle(b.id, b.bundleType as BundleType, cfg, options)
 }
 
-export function rmPackageEntry(b: Bundle, cfg: any): CartiPackage {
+export function rmPackageEntry(b: BundleDesc, cfg: any): CartiPackage {
     let config = Object.assign({},cfg)
-    config = rmBundle(b, config)
+    config = rmBundle(b.id, b.bundleType as BundleType, config)
     return rmAsset(b.id, config)
 }
 
-export function updatePackageEntry(b: Bundle, cfg: any, options: PackageEntryOptions = {}): CartiPackage {
+export function updatePackageEntry(b: Bundle | BundleDesc, cfg: any, options: PackageEntryOptions = {}): CartiPackage {
     const config = rmPackageEntry(b,cfg)
     return addPackageEntry(b, config, options)
 }
 
-function rmBundle(b: Bundle, cfg: CartiPackage){
+function rmBundle(cid: string, bundleType: BundleType, cfg: CartiPackage){
     const config = Object.assign({},cfg);
     const { machineConfig } = config
-    switch(b.bundleType as BundleType){
+    switch(bundleType as BundleType){
         case "flashdrive":
                 machineConfig.flash_drive = machineConfig.flash_drive || []
                 machineConfig.flash_drive = machineConfig.flash_drive.filter((drive)=>{
-                   return drive.cid !== b.id
+                   return drive.cid !== cid 
                 })
             break
         case "ram":
@@ -61,28 +68,31 @@ function rmBundle(b: Bundle, cfg: CartiPackage){
         return config 
 }
 
-function addBundle(b: Bundle, cfg: CartiPackage, options: PackageEntryOptions): CartiPackage{
+// NOTE might refactor resolved path as it creates an undefined entry in the config 
+// which might cause someone downstream isseus if using Object.keys()
+function addBundle(cid: string, bundleType: BundleType, cfg: CartiPackage, options: PackageEntryOptions): CartiPackage{
     const config = Object.assign({},cfg);
     const { machineConfig } = config
-    const {start, length, bootargs} = options
+    const {start, length, bootargs, resolvedPath} = options
     const shared = options.shared || false
-    switch(b.bundleType as BundleType){
+    switch(bundleType){
         case "flashdrive":
             if(!length || !start){
                 throw new Error("flash drive missing length and start")
             }
             machineConfig.flash_drive = machineConfig.flash_drive || []
-            machineConfig.flash_drive.push({ cid: b.id, start, length, shared})
+            machineConfig.flash_drive.push({ cid, start, length, shared, resolvedPath})
             break
         case "ram":
              if(!length)
                 throw new Error( "ram missing length")
-            machineConfig.ram = { cid: b.id, length } 
+            machineConfig.ram = { cid, length, resolvedPath } 
             break
         case "rom":
               machineConfig.rom = {
                   bootargs: bootargs as string,
-                  cid:b.id
+                  cid,
+                  resolvedPath
               }
               break
         case "raw":
