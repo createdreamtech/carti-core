@@ -1,8 +1,8 @@
 {
-  "name": "@etclabscore/pristine-typescript",
+  "name": "@createdreamtech/carti-lib",
   "version": "0.0.0-development",
   "description": "",
-  "main": "build/index.js",
+  "main": "build/src/index.js",
   "publishConfig": {
     "access": "public"
   },
