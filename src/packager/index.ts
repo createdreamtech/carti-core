@@ -92,9 +92,9 @@ type AssetLookup = { [cid: string]: string }
 function resolveNewMachineConfig(pkg: pkgConfig.CartiPackage, assetLookup: AssetLookup): machineConfig.MachineConfig{
     //@ts-ignore
     let machine:machineConfig.MachineConfig = { }
-    machine.clint = Object.assign({},pkg.machineConfig.clint)
-    machine.htif = Object.assign({},pkg.machineConfig.htif)
-    machine.processor = Object.assign({}, pkg.machineConfig.processor)
+    machine.clint =pkg.machineConfig.clint
+    machine.htif = pkg.machineConfig.htif
+    machine.processor = pkg.machineConfig.processor
     machine.ram =  {image_filename: pkg.machineConfig.ram.resolvedPath || assetLookup[pkg.machineConfig.ram.cid], length: pkg.machineConfig.ram.length}
     machine.rom =  {image_filename: pkg.machineConfig.rom.resolvedPath || assetLookup[pkg.machineConfig.rom.cid], bootargs: pkg.machineConfig.rom.bootargs}
     machine.flash_drive = pkg.machineConfig.flash_drive.map((drive)=>{
