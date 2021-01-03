@@ -5,9 +5,9 @@ import {fromStreamToStr} from "../utils"
 import { BundleConfig, Bundle } from "../generated/bundle_config_schema"
 import fs from "fs-extra"
 
+//TODO better error handling here a failure to parse results in a silent error
 export async function parseBundlesFile(fileContent: Readable): Promise<Bundle[]> {
    const content = await fromStreamToStr(fileContent)
-   console.log(content)
    await new Ajv().validate(bundleConfigSchema, content)
    const bundleConfig = JSON.parse(content) as BundleConfig
    return bundleConfig.bundles!
