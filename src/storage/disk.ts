@@ -21,6 +21,10 @@ export class DiskProvider implements StorageProvider{
         return fs.createReadStream(this.path(cid))
     }
 
+    async exists(cid:CID): Promise<boolean> {
+        return fs.pathExists(`${this.basePath}/${cid.toString()}/${cid.toString()}`)
+    }
+
     path(cid:CID): string {
         return `${this.basePath}/${cid.toString()}/${cid.toString()}`
     }
