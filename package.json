@@ -1,8 +1,8 @@
 {
-  "name": "@etclabscore/pristine-typescript",
+  "name": "@createdreamtech/carti-core",
   "version": "0.0.0-development",
   "description": "",
-  "main": "build/index.js",
+  "main": "build/src/index.js",
   "publishConfig": {
     "access": "public"
   },
@@ -10,9 +10,7 @@
     "build": "tsc",
     "generate:types": "node utils/generate_types.js",
     "lint": "eslint -c .eslintrc.js --ext .ts",
-    "test": "npm run lint && jest --coverage",
-    "test:mocha": "npx mocha build/src/**",
-    "test:m": "mocha"
+    "test": "npm run lint && mocha"
   },
   "author": "",
   "license": "Apache-2.0",

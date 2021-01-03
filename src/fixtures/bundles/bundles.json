@@ -1,0 +1,31 @@
+{
+    "bundles": [
+        {
+            "bundleType": "rom",
+            "deps": [],
+            "fileName": "example-rom",
+            "id": "ba3rawf3Bfaw3gsga",
+            "name": "@rom/example",
+            "uri": "https://my-cool-storage.com",
+            "version": "1.0.0"
+        },
+        {
+            "bundleType": "ram",
+            "deps": [],
+            "fileName": "example-rom",
+            "id": "ba3rawf3Bfaw3gsgd",
+            "name": "@rom/example",
+            "uri": "https://my-cool-storage.com",
+            "version": "1.0.0"
+        },
+            {
+              "bundleType": "rom",
+              "name": "pgp-verify",
+              "fileName": "baenrwigln3adcx6nbrmydmutph7s4mloh6b2tongfz2ejgtvgfy6fcatsy",
+              "id": "baenrwigln3adcx6nbrmydmutph7s4mloh6b2tongfz2ejgtvgfy6fcatsy",
+              "version": "1.0.0",
+              "uri": "/Users/zcstarr/src/create_dream_tech/bounties/cartesi"
+            }
+    ]
+
+}

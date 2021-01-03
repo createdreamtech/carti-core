@@ -6,7 +6,7 @@ import { keccak256 } from './hashers'
 export interface EncodedDatum {
     cid: CID;
     content: Uint8Array;
-} 
+}
 
 // EncodeWith is the public interface for encoding data, it's templated to take data in a format and function to encode it and hash it,
 // it returns the contentId and encodedData in an array
@@ -16,7 +16,7 @@ export interface Encoder {
 
 // DataEncoder specifies the definition for a data encoding function
 export interface DataEncoder<T> {
-    (data: T): Uint8Array;
+    (data: T): Promise<Uint8Array>;
 }
 
 // EncodeWith is a type for defining the composition of encoding functions
@@ -30,9 +30,9 @@ example usage
 export const binMemoryEncoder = getEncoder(inMemoryDataEncoder, binaryDataEncoder)
 storage.put("mydata", binMemoryEncoder)
 */
-export function getEncoder<T>(encoder: EncodeWith<T>, dataEncoder:DataEncoder<T>): Encoder {
+export function getEncoder<T>(encoder: EncodeWith<T>, dataEncoder: DataEncoder<T>): Encoder {
     return async (data) => {
-       return encoder(data,dataEncoder,keccak256) 
+        return encoder(data, dataEncoder, keccak256)
     }
 }
 
