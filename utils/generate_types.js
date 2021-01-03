@@ -1,3 +1,5 @@
+// This file is a utility file used to build generated types from json schema in typescript
+// This allows us to have schemas for all of the data structures and types referenced
 const JsonSchemaTranspiler = require("@json-schema-tools/transpiler").default;
 const machineConfigSchema = require("../src/machine-config-schema.json")
 const machinePackageSchema = require("../src/machine-config-package-schema.json")

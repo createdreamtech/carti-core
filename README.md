@@ -63,7 +63,7 @@ end
 const getStorage = async (storageType: string):Promise<Storage>=> {
     switch (storageType) {
         case "s3": 
-            return new Storage(new S3Provider(apiKey, secret, region, bucketName))
+            return new Storage(new S3Provider(bucketName))
         case "disk":
             await fs.mkdirp(`${assetDirectory}/_disk_storage/`)
             return new Storage(new DiskProvider(`${assetDirectory}/_disk_storage/`))

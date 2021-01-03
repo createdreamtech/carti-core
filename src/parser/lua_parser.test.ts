@@ -3,8 +3,8 @@ import fs from 'fs-extra';
 import { assert } from "console";
 
 
-const asLua=fs.readFileSync(__dirname + "/../fixtures/parser/test_assign_config.lua")
-const returnLua=fs.readFileSync(__dirname + "/../fixtures/parser/test_return_config.lua")
+const asLua = fs.readFileSync(__dirname + "/../fixtures/parser/test_assign_config.lua")
+const returnLua = fs.readFileSync(__dirname + "/../fixtures/parser/test_return_config.lua")
 
 
 describe("test cartesi config lua testing", async () => {
@@ -19,7 +19,7 @@ describe("test cartesi config lua testing", async () => {
         assert(machineConfig.flash_drive[0].length === "0x3c00000")
     })
 
-    it("should throw on malformed config", async ()=> {
+    it("should throw on malformed config", async () => {
         // TODO add negative test
         assert(true)
     })
