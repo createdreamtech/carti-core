@@ -22,7 +22,7 @@ describe("bundle assets test", ()=>{
     const testAsset = fs.readFileSync(testPath)
     //TODO needs better test to check correct pkg results 
 
-    it.only("should bundle and install asset into a carti compatible format",async ()=>{
+    it("should bundle and install asset into a carti compatible format",async ()=>{
         const bundleProvider = new MemoryProvider()
         const bundleStorage = new Storage(bundleProvider)
         const remoteProvider = new MemoryProvider()
