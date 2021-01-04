@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/createdreamtech/carti-lib/compare/1.1.0...1.1.1) (2021-01-04)
+
+
+### Bug Fixes
+
+* path resolution had additiona bracket breaking downstream ([38aeda7](https://github.com/createdreamtech/carti-lib/commit/38aeda7677837cbd08de29188872e443961ecf1d))
+
 # [1.1.0](https://github.com/createdreamtech/carti-lib/compare/1.0.0...1.1.0) (2021-01-04)
 
 
