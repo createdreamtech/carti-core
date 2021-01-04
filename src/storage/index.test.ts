@@ -29,7 +29,7 @@ describe("test all providers", () => {
             params: { Bucket: s3Provider.bucketName }
         })
 
-        providers = [new MemoryProvider(), s3Provider, new DiskProvider(diskStorageDir)]
+        providers = [new MemoryProvider(), s3Provider,  new DiskProvider(diskStorageDir)]
     })
     after(async () => {
         await rmAll(storageDir)
