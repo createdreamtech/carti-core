@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/createdreamtech/carti-lib/compare/1.0.0...1.1.0) (2021-01-04)
+
+
+### Features
+
+* rewrite disk provider to respect filename metadata is specified ([2298624](https://github.com/createdreamtech/carti-lib/commit/2298624d01c6305d03104c41b82eb38465e3535c))
+
 # 1.0.0 (2021-01-04)
 
 
