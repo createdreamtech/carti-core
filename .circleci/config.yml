@@ -70,17 +70,17 @@ workflows:
     jobs:
       - test:
           filters: *filter-only-semantic-pr
+          require: 
+             - build
       - build:
           filters: *filter-only-semantic-pr
 
   release:
     jobs:
-      - build:
-          filters: *filter-only-master
       - test:
           filters: *filter-only-master
-          require:
-            - build
+      - build:
+          filters: *filter-only-master
       - hold:
           filters: *filter-only-master
           type: approval
