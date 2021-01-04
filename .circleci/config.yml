@@ -70,8 +70,6 @@ workflows:
     jobs:
       - test:
           filters: *filter-only-semantic-pr
-          require: 
-             - build
       - build:
           filters: *filter-only-semantic-pr
 

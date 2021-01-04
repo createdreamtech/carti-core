@@ -10,7 +10,7 @@
     "build": "tsc && cp -r src/fixtures build/src/fixtures",
     "generate:types": "node utils/generate_types.js",
     "lint": "eslint -c .eslintrc.js --ext .ts",
-    "test": "npm run lint && mocha"
+    "test": "npm run build && npm run lint && mocha"
   },
   "author": "",
   "license": "Apache-2.0",
