@@ -42,7 +42,7 @@ export function remap(config: machineConfig.MachineConfig, pathMapping: PathMapp
 export async function pack(config: machineConfig.MachineConfig, storage: Storage): Promise<pkgConfig.CartiPackage> {
     const writeAssetFromDisk = async (fileName: string) => {
         const buffer = await fs.readFile(fileName)
-        const cid = await storage.put(buffer, binMemEncoder)
+        const cid = await storage.put(buffer, binMemEncoder,{fileName})
         return { name: fileName, cid }
     }
     const convertConfig = async (cfg: object & { image_filename: string }) => {
