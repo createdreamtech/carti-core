@@ -44,7 +44,7 @@ export class DiskProvider implements StorageProvider {
     async path(cid: CID): Promise<string> {
             const md = await this.getMetadata(cid)
             if(md)
-                return `${this.basePath}/${cid.toString()}/${md.fileName}}`
+                return `${this.basePath}/${cid.toString()}/${md.fileName}`
             return `${this.basePath}/${cid.toString()}/${cid.toString()}`
     }
 
