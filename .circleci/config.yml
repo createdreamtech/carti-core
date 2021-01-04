@@ -75,10 +75,12 @@ workflows:
 
   release:
     jobs:
-      - test:
-          filters: *filter-only-master
       - build:
           filters: *filter-only-master
+      - test:
+          filters: *filter-only-master
+          require:
+            - build
       - hold:
           filters: *filter-only-master
           type: approval
