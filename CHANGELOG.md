@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/createdreamtech/carti-lib/compare/1.2.0...1.3.0) (2021-01-05)
+
+
+### Features
+
+* add support for filename for machine installation ([67f0e6d](https://github.com/createdreamtech/carti-lib/commit/67f0e6d1aa8b474a6b7250779d48ced6d5f04c3f))
+
 # [1.2.0](https://github.com/createdreamtech/carti-lib/compare/1.1.1...1.2.0) (2021-01-05)
 
 
