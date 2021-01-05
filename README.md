@@ -10,7 +10,7 @@
 
 <!-- about the project -->
 ## About The Project
-Carti lib is a package library that enables [Carti](https://carti) to package, install, and store Cartesi built machines in a discoverable way. It also contains the concrete description of the specification
+Carti core is a package library that enables [Carti](https://github.com/createdreamtech/carti) to package, install, and store Cartesi built machines in a discoverable way. It also contains the concrete description of the specifications used by the packagemanager.
 
 ## Getting Started
 
@@ -24,8 +24,7 @@ Carti lib is a package library that enables [Carti](https://carti) to package, i
 Install via npm package
 
 ```bash
-Caveat: Currently not packaged, holding off "for" first official release and more items have been fleshed out
-# npm install -g @createdreamtech/carti-lib
+ npm install -g @createdreamtech/carti-core
 ```
 
 Then require it into any module.
