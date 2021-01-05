@@ -43,11 +43,11 @@ export async function pack(config: machineConfig.MachineConfig, storage: Storage
     const writeAssetFromDisk = async (fileName: string) => {
         const buffer = await fs.readFile(fileName)
         const cid = await storage.put(buffer, binMemEncoder,{fileName})
-        return { name: fileName, cid }
+        return { name: fileName, fileName, cid }
     }
     const convertConfig = async (cfg: object & { image_filename: string }) => {
-        const { cid, name } = await writeAssetFromDisk(cfg.image_filename)
-        const asset = createAssetEntry(name, cid)
+        const { cid, name, fileName } = await writeAssetFromDisk(cfg.image_filename)
+        const asset = createAssetEntry(fileName, cid)
         const config = replaceFileName(cfg, cid)
         return { asset, config }
     }
@@ -120,11 +120,11 @@ export async function install(pkg: pkgConfig.CartiPackage, fetcher: Fetcher, bas
     const cidToAssetLookup: AssetLookup = {}
     const packages = pkg.assets.map((asset) => {
         const cid = CID.parse(asset.cid)
-        return { cid, name: asset.name, data: fetcher.get(cid) }
+        return { cid, name: asset.name, fileName: asset.fileName, data: fetcher.get(cid) }
     })
     const resolvedPackages = await Promise.all(packages)
     const written = resolvedPackages.map(async (rp) => {
-        const filename = path.basename(rp.name)
+        const filename = path.basename(rp.fileName)
         const dir = `${basePath}/${rp.cid.toString()}`
         await fs.ensureDir(dir)
         const fileLocation = `${dir}/${filename}`;
