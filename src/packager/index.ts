@@ -19,7 +19,7 @@ const replaceFileName = (obj: any, cid: CID) => {
     return oo;
 }
 const createAssetEntry = (fileName: string, cid: CID): pkgConfig.Asset => {
-    return { cid: cid.toString(), name: fileName }
+    return { cid: cid.toString(), name: fileName, fileName: fileName }
 }
 type PathMapping = { [p: string]: string }
 

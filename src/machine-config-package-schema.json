@@ -52,12 +52,16 @@
                   "title": "name",
                   "type":"string"
               },
+              "fileName": {
+                  "title": "fileName",
+                  "type":"string"
+              },
               "cid": {
                   "title": "cid",
                   "type": "string"
               }
           },
-          "required": ["name", "cid"]
+          "required": ["name","fileName","cid"]
       },
       "packageMachineConfig" : {
         "title": "packageMachineConfig",

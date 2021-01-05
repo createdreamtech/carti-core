@@ -21,7 +21,7 @@ export function addPackageEntry(b: Bundle | BundleDesc, cfg: any, options: Packa
         throw new Error("malformed minimal configuration")
     }
     if (b.hasOwnProperty("name") === true)
-        cfg = addAsset(b.id, (b as Bundle).name, cfg)
+        cfg = addAsset(b.id, (b as Bundle).name,(b as Bundle).fileName, cfg)
     return addBundle(b.id, b.bundleType as BundleType, cfg, options)
 }
 
@@ -92,8 +92,8 @@ function addBundle(cid: string, bundleType: BundleType, cfg: CartiPackage, optio
     return config
 }
 
-function addAsset(id: string, name: string, cfg: CartiPackage) {
-    const newAsset = { cid: id, name }
+function addAsset(id: string, name: string, fileName: string, cfg: CartiPackage) {
+    const newAsset = { cid: id, name, fileName}
     return Object.assign({}, cfg, { assets: cfg.assets.concat(newAsset) })
 }
 

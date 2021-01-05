@@ -69,9 +69,11 @@ export interface PackageMachineConfig {
   flash_drive: FlashDrive;
 }
 export type Name = string;
+export type FileName = string;
 export type Cid = string;
 export interface Asset {
   name: Name;
+  fileName: FileName;
   cid: Cid;
   [k: string]: any;
 }
