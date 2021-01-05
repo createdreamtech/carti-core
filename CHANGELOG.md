@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/createdreamtech/carti-lib/compare/1.1.1...1.2.0) (2021-01-05)
+
+
+### Features
+
+* refactor assets to explicitly include filename ([643d588](https://github.com/createdreamtech/carti-lib/commit/643d588f921cf0d9ea89e0a4081515cf606cabd4))
+
 ## [1.1.1](https://github.com/createdreamtech/carti-lib/compare/1.1.0...1.1.1) (2021-01-04)
 
 
