@@ -1,7 +1,10 @@
 import { Readable } from "stream"
-export function fromStreamToStr(strm: Readable): Promise<string> {
-    return new Promise((resolve) => {
+export async function fromStreamToStr(strm: Readable): Promise<string> {
+    return new Promise((resolve, reject) => {
         const chunks: any = []
+        strm.on("error", (e)=>{
+            reject(e) 
+        })
         strm.on("data", (chunk) => {
             chunks.push(chunk)
         })
