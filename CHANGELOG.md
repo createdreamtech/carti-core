@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/createdreamtech/carti-lib/compare/1.3.0...1.3.1) (2021-01-14)
+
+
+### Bug Fixes
+
+* change return to use async for try/await clauses downstream ([3faf78f](https://github.com/createdreamtech/carti-lib/commit/3faf78f84f5071828df8f1a77878e5e29c17260a))
+
 # [1.3.0](https://github.com/createdreamtech/carti-lib/compare/1.2.0...1.3.0) (2021-01-05)
 
 
