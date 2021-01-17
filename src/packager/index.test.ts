@@ -14,7 +14,6 @@ import {testTemplateLuaConfig} from "../parser/test_template_config";
 const testLua = testTemplateLuaConfig(`${__dirname}/../fixtures`)
 
 
-//TODO fix test to not look for hardcoded template location
 describe("packing function test", () => {
 
     //TODO needs better test to check correct pkg results 
