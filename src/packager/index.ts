@@ -131,7 +131,7 @@ export async function install(pkg: pkgConfig.CartiPackage, fetcher: Fetcher, bas
         const data = await rp.data
         const fws = fs.createWriteStream(fileLocation)
         data.pipe(fws)
-        const prom = new Promise((resolve) => {
+        const prom = new Promise<void>((resolve) => {
             data.on("end", () => {
                 fws.close()
             })
