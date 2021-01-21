@@ -14,7 +14,7 @@ describe("tests package config object management", () => {
         }
     }
     // TODO add more exhaustive tests
-    it("should crud a carti package object", () => {
+    it.only("should crud a carti package object", () => {
 
         const flashBundle1 = dummyBundle("flashdrive", "flash")
         const flashBundle2 = dummyBundle("flashdrive", "flash2")
