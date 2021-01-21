@@ -4,6 +4,7 @@ import type { BundleType } from "./bundle";
 
 export interface PackageEntryOptions {
     start?: string
+    label?: string
     length?: string
     bootargs?: string
     shared?: boolean
@@ -64,15 +65,15 @@ function rmBundle(cid: string, bundleType: BundleType, cfg: CartiPackage) {
 function addBundle(cid: string, bundleType: BundleType, cfg: CartiPackage, options: PackageEntryOptions): CartiPackage {
     const config = Object.assign({}, cfg);
     const { machineConfig } = config
-    const { start, length, bootargs, resolvedPath } = options
+    const { start, length, bootargs, resolvedPath, label } = options
     const shared = options.shared || false
     switch (bundleType) {
         case "flashdrive":
-            if (!length || !start) {
-                throw new Error("flash drive missing length and start")
+            if (!length || !start || !label) {
+                throw new Error("flash drive missing length, start, and/or label")
             }
             machineConfig.flash_drive = machineConfig.flash_drive || []
-            machineConfig.flash_drive.push({ cid, start, length, shared, resolvedPath })
+            machineConfig.flash_drive.push({ cid, start, label, length, shared, resolvedPath })
             break
         case "ram":
             if (!length)

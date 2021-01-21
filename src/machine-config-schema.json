@@ -209,7 +209,7 @@
                 "type": "boolean"
             }
         },
-        "required": ["start","length","image_filename","shared"],
+        "required": ["start","length","shared"],
         "additionalProperties": false
       },
       "x": {

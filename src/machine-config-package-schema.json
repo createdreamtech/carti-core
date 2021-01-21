@@ -274,9 +274,12 @@
             },
             "shared": {
                 "type": "boolean"
+            },
+            "label": {
+                "type": "string"
             }
         },
-        "required": ["start","length","cid","shared"],
+        "required": ["start","length","shared", "label"],
         "additionalProperties": false
       },
       "x": {

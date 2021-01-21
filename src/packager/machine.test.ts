@@ -23,16 +23,16 @@ describe("tests package config object management", () => {
         const romBundle = dummyBundle("rom", "rom-cid")
         const ramBundle = dummyBundle("ram", "ram-cid",)
 
-        let config = cartiPackage.addPackageEntry(flashBundle1, { assets: [], machineConfig: {}, version: 1.0 }, { length: "0x400", start: "0x800" })
+        let config = cartiPackage.addPackageEntry(flashBundle1, { assets: [], machineConfig: {}, version: 1.0 }, { length: "0x400", start: "0x800" , label: "root" })
         expect(config.assets.length === 1).true
         expect(config.assets[0].cid === "flash").true
         expect(config.machineConfig.flash_drive[0].cid === "flash").true
 
-        config = cartiPackage.addPackageEntry(flashBundle2, config, { length: "0x400", start: "0x800" })
+        config = cartiPackage.addPackageEntry(flashBundle2, config, { length: "0x400", start: "0x800", label:"flash1" })
         expect(config.assets.length === 2).true
         expect(config.assets.filter((a) => a.cid === "flash2").length === 1)
 
-        config = cartiPackage.updatePackageEntry(flashBundle3, config, { length: "0x900", start: "0x1000" })
+        config = cartiPackage.updatePackageEntry(flashBundle3, config, { length: "0x900", start: "0x1000", label:"flash2" })
         expect(config.assets.length === 2).true
 
         const flashDrive = config.machineConfig.flash_drive.filter((a) => a.cid === "flash2")[0]
