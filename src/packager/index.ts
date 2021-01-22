@@ -32,7 +32,7 @@ export function remap(config: machineConfig.MachineConfig, pathMapping: PathMapp
     Object.keys(pathMapping).forEach((p) => {
         newConfig.ram.image_filename = newConfig.ram.image_filename.replace(p, pathMapping[p])
         newConfig.rom.image_filename = newConfig.rom.image_filename.replace(p, pathMapping[p])
-        newConfig.flash_drive.forEach((fd) => fd.image_filename = fd.image_filename.replace(p, pathMapping[p]))
+        newConfig.flash_drive.forEach((fd) => fd.image_filename = fd.image_filename ? fd.image_filename.replace(p, pathMapping[p]) : fd.image_filename)
     })
     return newConfig
 }
@@ -51,6 +51,15 @@ export async function pack(config: machineConfig.MachineConfig, storage: Storage
         const config = replaceFileName(cfg, cid)
         return { asset, config }
     }
+    const convertFlashDriveConfig = async (cfg: object & { image_filename?: string }, label:string) => {
+        if(cfg.image_filename){ 
+           const converted = await convertConfig(cfg as object & { image_filename: string })
+           converted.config = Object.assign({}, converted.config, { label })
+           return converted
+        }
+
+        return { asset: undefined, config: Object.assign({}, cfg, { label }) }
+    }
 
     const tmpMachineConfig = Object.assign({}, config)
     let machineConfig: pkgConfig.PackageMachineConfig = {} as pkgConfig.PackageMachineConfig;
@@ -67,10 +76,22 @@ export async function pack(config: machineConfig.MachineConfig, storage: Storage
 
 
     const flashDrives = []
-    for (const fdrive of tmpMachineConfig.flash_drive) {
-        converted = await convertConfig(fdrive)
+    // NOTE hardcoding root to be the first drive EXCEPTIONAL case
+    const generatedName=(x: number)=> x ? `generated_label${x}` : 'root'
+    // NOTE here we are sorting the drives by start in memory and choosing
+    // the first one to be the root drive 
+    const sortedDrives = tmpMachineConfig.flash_drive.sort((a, b) => {
+        const result = BigInt(a.start) - BigInt(b.start)
+        if(result > 0) return 1
+        if(result < 0) return -1
+        return 0
+    })
+    
+    for (const [i, fdrive] of sortedDrives.entries()) {
+        const converted = await convertFlashDriveConfig(fdrive, generatedName(i))
         flashDrives.push(converted.config)
-        assets.push(converted.asset)
+        if(converted.asset)
+            assets.push(converted.asset)
     }
     machineConfig.flash_drive = flashDrives;
     machineConfig.processor = tmpMachineConfig.processor;
@@ -101,12 +122,9 @@ function resolveNewMachineConfig(pkg: pkgConfig.CartiPackage, assetLookup: Asset
     machine.ram = { image_filename: pkg.machineConfig.ram.resolvedPath || assetLookup[pkg.machineConfig.ram.cid], length: pkg.machineConfig.ram.length }
     machine.rom = { image_filename: pkg.machineConfig.rom.resolvedPath || assetLookup[pkg.machineConfig.rom.cid], bootargs: pkg.machineConfig.rom.bootargs }
     machine.flash_drive = pkg.machineConfig.flash_drive.map((drive) => {
-        return {
-            image_filename: drive.resolvedPath || assetLookup[drive.cid],
-            length: drive.length,
-            shared: drive.shared,
-            start: drive.start
-        }
+        let core = {length: drive.length, shared: drive.shared, start: drive.start}
+        const image_filename = !drive.cid ? {} : { image_filename: (drive.resolvedPath || assetLookup[drive.cid]) as string }
+        return Object.assign({}, image_filename, core)
     })
     return machine
 }

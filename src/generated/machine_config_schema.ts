@@ -53,7 +53,7 @@ export interface Clint {
 export interface Drive {
   start: StringGuhVuclw;
   length: StringGuhVuclw;
-  image_filename: StringDoaGddGA;
+  image_filename?: StringDoaGddGA;
   shared: BooleanVyG3AETh;
 }
 export type FlashDrive = Drive[];
