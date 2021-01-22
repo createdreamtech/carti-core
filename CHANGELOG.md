@@ -1,3 +1,15 @@
+# [1.4.0](https://github.com/createdreamtech/carti-core/compare/1.3.1...1.4.0) (2021-01-22)
+
+
+### Bug Fixes
+
+* this is a feature allow for dynamic flash drives set at runtime ([f2bed8a](https://github.com/createdreamtech/carti-core/commit/f2bed8a4795b2a1b1035569fbd63799e0b4c5a3c))
+
+
+### Features
+
+* add support for auto resolving start position for flashdrive ([a07a4a5](https://github.com/createdreamtech/carti-core/commit/a07a4a5c546eea8b4f32eb8290e5cf399c8f7ee0))
+
 ## [1.3.1](https://github.com/createdreamtech/carti-lib/compare/1.3.0...1.3.1) (2021-01-14)
 
 
