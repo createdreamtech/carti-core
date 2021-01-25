@@ -6,7 +6,7 @@ import { binMemEncoder } from "./package_encoders"
 import { Fetcher } from "../fetcher";
 import { CID } from "multiformats"
 import { readableByteStreamToBuffer } from "../encoders";
-export type BundleType = "ram" | "rom" | "raw" | "flashdrive"
+export type BundleType = "ram" | "rom" | "flashdrive" | "raw" 
 
 export interface BundleMeta {
     name: string
