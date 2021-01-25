@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/createdreamtech/carti-core/compare/1.5.0...1.6.0) (2021-01-25)
+
+
+### Features
+
+* export configuration creation w/o install and configurable destPath ([5d5b96f](https://github.com/createdreamtech/carti-core/commit/5d5b96f3f27032baeab47900fe3e636d8bd1abaa))
+
 # [1.5.0](https://github.com/createdreamtech/carti-core/compare/1.4.0...1.5.0) (2021-01-25)
 
 
