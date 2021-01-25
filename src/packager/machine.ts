@@ -6,7 +6,8 @@ export interface PackageEntryOptions {
     start?: string
     label?: string
     length?: string
-    bootargs?: string
+    args?: string
+    bootPrefix?: string
     shared?: boolean
     resolvedPath?: string
 }
@@ -15,25 +16,6 @@ export interface BundleDesc {
     id: string,
     bundleType: string
 }
-
-// Note here is how we generate bootargs prefix in accordance to the lua
-// https://github.com/cartesi/machine-emulator/blob/9cf2f448e73663ef93724ca5f48ba32e2d60e787/src/cartesi-machine.lua#L771
-/*
-    local mtdparts = {}
-    for i, label in ipairs(flash_label_order) do
-        config.flash_drive[#config.flash_drive+1] = {
-            image_filename = flash_image_filename[label],
-            shared = flash_shared[label],
-            start = flash_start[label],
-            length = flash_length[label]
-        }
-        mtdparts[#mtdparts+1] = string.format("flash.%d:-(%s)", i-1, label)
-
-    if #mtdparts > 0 then
-        config.rom.bootargs = append(config.rom.bootargs, "mtdparts=" ..
-            table.concat(mtdparts, ";"))
-    end
-*/
 
 
 // NOTE flash_resolve_starts https://github.com/cartesi/machine-emulator/blob/master/src/cartesi-machine.lua#L659
@@ -82,6 +64,17 @@ function autoResolveStart(cfg: CartiPackage, newDrive?: Drive): CartiPackage {
 }
 
 
+export function setPackageBoot(cfg: CartiPackage, args: string, bootPrefix?: string) {
+    const machineConfig =Object.assign({}, cfg.machineConfig, {boot: { args, bootPrefix }})
+    return Object.assign({}, cfg, { machineConfig })
+}
+
+export function unsetPackageBoot(cfg: CartiPackage) {
+    const config = Object.assign({},cfg)
+    delete config.machineConfig.boot.bootPrefix
+    config.machineConfig.boot.args =""
+    return config
+}
 
 // addPackageEntry adds a bundle to CartiPackage  on disk, cfg is assumed to be CartiPackage
 export function addPackageEntry(b: Bundle | BundleDesc, cfg: any, options: PackageEntryOptions = {}): CartiPackage {
@@ -127,12 +120,13 @@ function rmBundle(cid: string, bundleType: BundleType, cfg: CartiPackage) {
     return config
 }
 
+const defaultArgs = "";
 // NOTE might refactor resolved path as it creates an undefined entry in the config 
 // which might cause someone downstream isseus if using Object.keys()
 function addBundle(cid: string, bundleType: BundleType, cfg: CartiPackage, options: PackageEntryOptions): CartiPackage {
     let config = Object.assign({}, cfg);
     const { machineConfig } = config
-    const { start, length, bootargs, resolvedPath, label } = options
+    const { start, length, resolvedPath, label } = options
     const shared = options.shared || false
     switch (bundleType) {
         case "flashdrive":
@@ -155,7 +149,6 @@ function addBundle(cid: string, bundleType: BundleType, cfg: CartiPackage, optio
             break
         case "rom":
             machineConfig.rom = {
-                bootargs: bootargs as string,
                 cid,
                 resolvedPath
             }

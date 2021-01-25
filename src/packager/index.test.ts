@@ -21,6 +21,7 @@ describe("packing function test", () => {
         let machineConfig = await luaParser.parseLuaMachineConfig(testLua.toString())
         const storage = new Storage(new MemoryProvider())
         const pkgConfig = await pack(machineConfig, storage);
+        console.log(JSON.stringify(pkgConfig,null,2))
         expect(pkgConfig.assets.length === 3).true
     })
 

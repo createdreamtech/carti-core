@@ -30,6 +30,12 @@ export interface Processor {
   stval?: StringGuhVuclw;
   stvec?: StringGuhVuclw;
 }
+export type Args = string;
+export type BootPrefix = string;
+export interface Boot {
+  args: Args;
+  bootPrefix?: BootPrefix;
+}
 export type StringDoaGddGA = string;
 export interface Ram {
   length: StringGuhVuclw;
@@ -37,7 +43,6 @@ export interface Ram {
   resolvedPath?: StringDoaGddGA;
 }
 export interface Rom {
-  bootargs: StringDoaGddGA;
   cid: StringDoaGddGA;
   resolvedPath?: StringDoaGddGA;
 }
@@ -63,6 +68,7 @@ export interface Drive {
 export type FlashDrive = Drive[];
 export interface PackageMachineConfig {
   processor?: Processor;
+  boot: Boot;
   ram: Ram;
   rom: Rom;
   htif?: Htif;

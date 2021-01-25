@@ -14,7 +14,7 @@ describe("tests package config object management", () => {
         }
     }
     // TODO add more exhaustive tests
-    it.only("should crud a carti package object", () => {
+    it("should crud a carti package object", () => {
 
         const flashBundle1 = dummyBundle("flashdrive", "flash")
         const flashBundle2 = dummyBundle("flashdrive", "flash2")
@@ -39,12 +39,13 @@ describe("tests package config object management", () => {
         expect(flashDrive.length === "0x900").true
         expect(flashDrive.start === "0x1000").true
 
-        config = cartiPackage.updatePackageEntry(romBundle, config, { bootargs: "hello world" })
+        config = cartiPackage.updatePackageEntry(romBundle, config, {})
         config = cartiPackage.updatePackageEntry(ramBundle, config, { length: "0x450" })
+        config = cartiPackage.setPackageBoot(config, "hello world")
         expect(config.assets.length === 4).true
         expect(config.machineConfig.rom.cid === "rom-cid").true
         expect(config.machineConfig.ram.cid === "ram-cid").true
         expect(config.machineConfig.ram.length === "0x450").true
-        expect(config.machineConfig.rom.bootargs === "hello world").true
+        expect(config.machineConfig.boot.args === "hello world").true
     })
 })

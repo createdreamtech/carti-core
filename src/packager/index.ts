@@ -37,6 +37,18 @@ export function remap(config: machineConfig.MachineConfig, pathMapping: PathMapp
     return newConfig
 }
 
+function parseLabelsFromBootArgs(bootArgs: string){
+    const labels: string[] = [];
+    for (const lRegex of bootArgs.matchAll(/-\((?<a>.*?)\)/g)) {
+        labels.push(lRegex[1])
+    }
+    return labels
+}
+//Note assumes bootargs match format of `prefix -- bootarguments`
+function parseArgsFromBootArgs(bootArgs: string){
+    return bootArgs.slice(bootArgs.indexOf("--") + 3)
+}
+
 // pack converts a lua machine configuration into bundles stored in storage and CartiPackage only 
 // useful in context where you are moving from lua config to a CartiPackage 
 export async function pack(config: machineConfig.MachineConfig, storage: Storage): Promise<pkgConfig.CartiPackage> {
@@ -51,6 +63,7 @@ export async function pack(config: machineConfig.MachineConfig, storage: Storage
         const config = replaceFileName(cfg, cid)
         return { asset, config }
     }
+    // TODO convert for boot arg renaming to get proper labels for flash drive
     const convertFlashDriveConfig = async (cfg: object & { image_filename?: string }, label:string) => {
         if(cfg.image_filename){ 
            const converted = await convertConfig(cfg as object & { image_filename: string })
@@ -71,8 +84,13 @@ export async function pack(config: machineConfig.MachineConfig, storage: Storage
     assets.push(converted.asset)
 
     converted = await convertConfig(tmpMachineConfig.rom)
-    machineConfig.rom = converted.config
+    console.log(tmpMachineConfig.rom)
+    const bootArgs = converted.config.bootargs
+    delete converted.config.bootargs
+    machineConfig.rom = converted.config; 
     assets.push(converted.asset)
+    //NOTE makes assumption there is not a custom prefix in the args
+    machineConfig.boot = { args: parseArgsFromBootArgs(bootArgs) }
 
 
     const flashDrives = []
@@ -87,8 +105,9 @@ export async function pack(config: machineConfig.MachineConfig, storage: Storage
         return 0
     })
     
+    const labels = parseLabelsFromBootArgs(bootArgs)
     for (const [i, fdrive] of sortedDrives.entries()) {
-        const converted = await convertFlashDriveConfig(fdrive, generatedName(i))
+        const converted = await convertFlashDriveConfig(fdrive, labels[i])
         flashDrives.push(converted.config)
         if(converted.asset)
             assets.push(converted.asset)
@@ -110,17 +129,53 @@ const DOCKER_CARTI_PACKAGES_BASE_PATH = "/opt/carti/packages"
 
 // cid to asset resolved container path
 type AssetLookup = { [cid: string]: string }
+// Note here is how we generate bootargs prefix in accordance to the lua
+// https://github.com/cartesi/machine-emulator/blob/9cf2f448e73663ef93724ca5f48ba32e2d60e787/src/cartesi-machine.lua#L771
+/*
+    local mtdparts = {}
+    for i, label in ipairs(flash_label_order) do
+        config.flash_drive[#config.flash_drive+1] = {
+            image_filename = flash_image_filename[label],
+            shared = flash_shared[label],
+            start = flash_start[label],
+            length = flash_length[label]
+        }
+        mtdparts[#mtdparts+1] = string.format("flash.%d:-(%s)", i-1, label)
 
+    if #mtdparts > 0 then
+        config.rom.bootargs = append(config.rom.bootargs, "mtdparts=" ..
+            table.concat(mtdparts, ";"))
+    end
+*/
+
+// NOTE taken from https://github.com/cartesi/machine-emulator/blob/9cf2f448e73663ef93724ca5f48ba32e2d60e787/src/cartesi-machine.lua#L211
+const CARTESI_BOOT_ARG_PREFIX = "console=hvc0 rootfstype=ext2 root=/dev/mtdblock0 rw quiet"
+function buildPrefix(drives: pkgConfig.FlashDrive) {
+    const mtdparts:string[] = []
+    drives.forEach((drive, i) => {
+        mtdparts.push(`flash.${i}:-(${drive.label})`)
+    })
+    return `${CARTESI_BOOT_ARG_PREFIX} mtdparts=${mtdparts.join(';')}`
+}
+
+function buildBootArgs(args: string,  drives: pkgConfig.FlashDrive, bootPrefix?: string,) {
+    const prefix = bootPrefix || buildPrefix(drives)
+    return `${prefix} -- ${args}`
+}
 // resolveNewMachineConfig takes a cartiPackage and resolves it into a format that can be used to write a lua based cartesi 
 // machine config
 function resolveNewMachineConfig(pkg: pkgConfig.CartiPackage, assetLookup: AssetLookup): machineConfig.MachineConfig {
     //@ts-ignore
     let machine: machineConfig.MachineConfig = {}
+    const {args, bootPrefix} = pkg.machineConfig.boot
     machine.clint = pkg.machineConfig.clint
     machine.htif = pkg.machineConfig.htif
     machine.processor = pkg.machineConfig.processor
     machine.ram = { image_filename: pkg.machineConfig.ram.resolvedPath || assetLookup[pkg.machineConfig.ram.cid], length: pkg.machineConfig.ram.length }
-    machine.rom = { image_filename: pkg.machineConfig.rom.resolvedPath || assetLookup[pkg.machineConfig.rom.cid], bootargs: pkg.machineConfig.rom.bootargs }
+    machine.rom = { 
+        image_filename: pkg.machineConfig.rom.resolvedPath || assetLookup[pkg.machineConfig.rom.cid], 
+        bootargs: buildBootArgs(args, pkg.machineConfig.flash_drive, bootPrefix)
+    }
     machine.flash_drive = pkg.machineConfig.flash_drive.map((drive) => {
         let core = {length: drive.length, shared: drive.shared, start: drive.start}
         const image_filename = !drive.cid ? {} : { image_filename: (drive.resolvedPath || assetLookup[drive.cid]) as string }
