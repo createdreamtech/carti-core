@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/createdreamtech/carti-core/compare/1.4.0...1.5.0) (2021-01-25)
+
+
+### Features
+
+* add support for boot args as a first class entity ([1d390f2](https://github.com/createdreamtech/carti-core/commit/1d390f2354049f7c21f4383bcde7638a33c8538f))
+
 # [1.4.0](https://github.com/createdreamtech/carti-core/compare/1.3.1...1.4.0) (2021-01-22)
 
 
