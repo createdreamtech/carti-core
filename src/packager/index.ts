@@ -162,6 +162,16 @@ function buildBootArgs(args: string,  drives: pkgConfig.FlashDrive, bootPrefix?:
     const prefix = bootPrefix || buildPrefix(drives)
     return `${prefix} -- ${args}`
 }
+// createNewMachineConfig takes a pkg and basePath to prefix all the underlying assets as
+// this is contextual so default is /opt/carti/packages but it's up to downstream to define
+// where the assets live (in our case docker is a common remapped environment)
+export function createNewMachineConfig(pkg: pkgConfig.CartiPackage, basePath: string): machineConfig.MachineConfig {
+    const mapping:AssetLookup = {}
+    pkg.assets.forEach((asset)=>{
+        mapping[asset.cid.toString()]=`${basePath}/${asset.cid.toString()}/${asset.fileName}`
+    })
+   return resolveNewMachineConfig(pkg, mapping) 
+}
 // resolveNewMachineConfig takes a cartiPackage and resolves it into a format that can be used to write a lua based cartesi 
 // machine config
 function resolveNewMachineConfig(pkg: pkgConfig.CartiPackage, assetLookup: AssetLookup): machineConfig.MachineConfig {
@@ -188,9 +198,8 @@ function resolveNewMachineConfig(pkg: pkgConfig.CartiPackage, assetLookup: Asset
 // install takes a CartiPackage and fetcher and installation base path, it will retrieve the CID's specified  
 // and install the resulting cids on disk locally in the specified basePath in a basePath/cid/filename directory
 // typically not how a bundle is added to bundle storage but used for building a stored machine
-export async function install(pkg: pkgConfig.CartiPackage, fetcher: Fetcher, basePath: string): Promise<machineConfig.MachineConfig> {
+export async function install(pkg: pkgConfig.CartiPackage, fetcher: Fetcher, basePath: string, destPath: string): Promise<machineConfig.MachineConfig> {
 
-    const cidToAssetLookup: AssetLookup = {}
     const packages = pkg.assets.map((asset) => {
         const cid = CID.parse(asset.cid)
         return { cid, name: asset.name, fileName: asset.fileName, data: fetcher.get(cid) }
@@ -213,9 +222,8 @@ export async function install(pkg: pkgConfig.CartiPackage, fetcher: Fetcher, bas
             })
 
         })
-        cidToAssetLookup[rp.cid.toString()] = `${DOCKER_CARTI_PACKAGES_BASE_PATH}/${rp.cid.toString()}/${filename}`
         return prom
     })
     await Promise.all(written)
-    return resolveNewMachineConfig(pkg, cidToAssetLookup)
+    return createNewMachineConfig(pkg, destPath)
 }

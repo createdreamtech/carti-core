@@ -31,7 +31,7 @@ describe("packing function test", () => {
         const storage = new Storage(new MemoryProvider())
         const pkgConfig = await pack(machineConfig, storage);
         const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'tmp-carti-p'))
-        const cfg = await install(pkgConfig, storage, dir)
+        const cfg = await install(pkgConfig, storage, dir, "/opt/carti/packages")
         console.log(`${dir}/baenrwigfd3thblxcse7nvzwsebphtfre5nsmfl3wymz5n3jgi3aqwhsocy/rom.bin`)
         let example = fs.readFileSync(`${dir}/baenrwigfd3thblxcse7nvzwsebphtfre5nsmfl3wymz5n3jgi3aqwhsocy/rom.bin`)
         expect(cfg.rom.image_filename === '/opt/carti/packages/baenrwigfd3thblxcse7nvzwsebphtfre5nsmfl3wymz5n3jgi3aqwhsocy/rom.bin')
