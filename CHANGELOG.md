@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/createdreamtech/carti-core/compare/1.6.0...1.6.1) (2021-01-26)
+
+
+### Bug Fixes
+
+* adds proper support for removing drives by label and test ([3f8970b](https://github.com/createdreamtech/carti-core/commit/3f8970bd1fe52554f0d01d097ad1284111f6d143))
+
 # [1.6.0](https://github.com/createdreamtech/carti-core/compare/1.5.0...1.6.0) (2021-01-25)
 
 
