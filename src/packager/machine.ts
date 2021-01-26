@@ -86,6 +86,17 @@ export function addPackageEntry(b: Bundle | BundleDesc, cfg: any, options: Packa
     return addBundle(b.id, b.bundleType as BundleType, cfg, options)
 }
 
+export function rmPackageEntryByLabel(label:string, cfg: CartiPackage): CartiPackage {
+    let config = Object.assign({}, cfg)
+    const drive = cfg.machineConfig.flash_drive.find((d)=>d.label === label)
+    if(drive && drive.cid){
+        config = rmBundle(drive.cid, "flashdrive", config)
+        config = rmAsset(drive.cid, config)
+    }
+    config.machineConfig.flash_drive = config.machineConfig.flash_drive.filter((d) => d.label !== label)
+    return config
+}
+
 // rmPackageEntry removes a bundle from a CartiPackage
 export function rmPackageEntry(b: BundleDesc, cfg: any): CartiPackage {
     let config = Object.assign({}, cfg)
