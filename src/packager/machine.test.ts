@@ -42,10 +42,21 @@ describe("tests package config object management", () => {
         config = cartiPackage.updatePackageEntry(romBundle, config, {})
         config = cartiPackage.updatePackageEntry(ramBundle, config, { length: "0x450" })
         config = cartiPackage.setPackageBoot(config, "hello world")
+
         expect(config.assets.length === 4).true
         expect(config.machineConfig.rom.cid === "rom-cid").true
         expect(config.machineConfig.ram.cid === "ram-cid").true
         expect(config.machineConfig.ram.length === "0x450").true
         expect(config.machineConfig.boot.args === "hello world").true
+        config = cartiPackage.rmPackageEntryByLabel("cool", config)
+        expect(config.assets.length === 4).true
+        console.log(JSON.stringify(config,null,2))
+        config = cartiPackage.rmPackageEntryByLabel("flash2", config)
+        expect(config.assets.length === 3).true
+        config = cartiPackage.rmPackageEntryByLabel("flash2", config)
+        expect(config.machineConfig.flash_drive.find((d)=>d.label==="flash2") === undefined).true
+        config = cartiPackage.rmPackageEntry({ id: "rom-cid", bundleType: "rom" }, config)
+        expect(config.assets.length === 2).true
+        expect(config.machineConfig.rom.cid === undefined).true
     })
 })
