@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/createdreamtech/carti-core/compare/1.6.1...1.6.2) (2021-01-27)
+
+
+### Bug Fixes
+
+* correct following redirects properly ([d42a8e5](https://github.com/createdreamtech/carti-core/commit/d42a8e5248187ded87627c53f800a375218b88bb))
+
 ## [1.6.1](https://github.com/createdreamtech/carti-core/compare/1.6.0...1.6.1) (2021-01-26)
 
 
