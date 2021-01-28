@@ -91,6 +91,8 @@ export interface Metadata {
   projectName?: ProjectName;
   [k: string]: any;
 }
+export type Repo = string;
+export type Repos = Repo[];
 /**
  *
  * Cartesi Machine Package Description
@@ -101,5 +103,6 @@ export interface CartiPackage {
   assets: Assets;
   version: Version;
   metadata?: Metadata;
+  repos?: Repos;
   [k: string]: any;
 }

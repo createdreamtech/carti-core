@@ -20,6 +20,10 @@
                 },
                 "metadata": {
                     "$ref": "#/definitions/metadata"
+                },
+                "repos": {
+                    "$ref": "#/definitions/repos",
+                    "$comment": "current restriction that repo must be git(hub/lab/etc...) based"
                 }
             },
             "required": [
@@ -41,7 +45,7 @@
                 }
             }
         },
-        "assets": {
+       "assets": {
             "type": "array",
             "title": "assets",
             "items": {
@@ -230,6 +234,17 @@
             },
             "required": ["args"],
             "additionalProperties": false
+        },
+        "repo": {
+            "title": "repo",
+            "type": "string"
+        },
+        "repos": {
+            "title": "repos",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/repo"
+            }
         },
         "rom": {
             "type": "object",
