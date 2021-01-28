@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/createdreamtech/carti-core/compare/1.6.2...1.7.0) (2021-01-28)
+
+
+### Features
+
+* add support for a repo specification within package definition ([f4e2bab](https://github.com/createdreamtech/carti-core/commit/f4e2bab1e7b666988a3a232a83dd1a9dadb7936a))
+
 ## [1.6.2](https://github.com/createdreamtech/carti-core/compare/1.6.1...1.6.2) (2021-01-27)
 
 
