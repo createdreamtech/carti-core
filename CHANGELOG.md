@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/createdreamtech/carti-core/compare/1.7.0...1.7.1) (2021-01-29)
+
+
+### Bug Fixes
+
+* this corrects escaping on all fields ([de0d191](https://github.com/createdreamtech/carti-core/commit/de0d19195079d427806ae634ee6023cbf2f45dc7))
+
 # [1.7.0](https://github.com/createdreamtech/carti-core/compare/1.6.2...1.7.0) (2021-01-28)
 
 
