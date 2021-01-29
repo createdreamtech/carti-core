@@ -17,7 +17,7 @@ ${outerIndent}},
 const condVarTemplate = (val: any, varName: string, indent = 0, quote = false): string => {
   const bodyIndent = ' '.repeat(indent + 2)
   const q = quote ? '"' : ""
-  const value = `${bodyIndent}${varName} = ${q}<%- ${varName} %>${q},`
+  const value = `${bodyIndent}${varName} = ${q}<%= ${varName} %>${q},`
   const condTemplate = `
    <% if (typeof(${varName}) !== "undefined") {%>
      ${value}
