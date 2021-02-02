@@ -1,18 +1,19 @@
 import { MachineConfig } from "../generated/machine_config_schema";
 import _ from "lodash";
 
+//${bodyIndent}image_filename = "<%- image_filename %>",
 const flashDriveTemplate = (drive: any, indent = 6): string => {
   const bodyIndent = ' '.repeat(indent + 2)
   const outerIndent = ' '.repeat(indent)
   const fdriveTemplate = `${outerIndent}{
 ${bodyIndent}start = <%- start %>,
 ${bodyIndent}length = <%- length %>,
-${bodyIndent}image_filename = "<%- image_filename %>",
+${bodyIndent}<%= condVarTemplate(image_filename, "image_filename", 1, true) %>
 ${bodyIndent}shared = <%- shared %>,
 ${outerIndent}},
 `
   const compiled = _.template(fdriveTemplate)
-  return compiled(drive)
+  return compiled({...drive, condVarTemplate})
 }
 const condVarTemplate = (val: any, varName: string, indent = 0, quote = false): string => {
   const bodyIndent = ' '.repeat(indent + 2)

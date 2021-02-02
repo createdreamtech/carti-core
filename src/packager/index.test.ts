@@ -27,7 +27,7 @@ describe("packing function test", () => {
     })
 
     //TODO more exhaustive test here for proper installation
-    it.only("should install a package config", async () => {
+    it("should install a package config", async () => {
         let machineConfig = await luaParser.parseLuaMachineConfig(testLua.toString())
         const storage = new Storage(new MemoryProvider())
         const pkgConfig = await pack(machineConfig, storage);
