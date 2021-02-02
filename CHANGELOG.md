@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/createdreamtech/carti-core/compare/1.7.1...1.7.2) (2021-02-02)
+
+
+### Bug Fixes
+
+* this resolves an issue with bundleless flash drives ([022adb9](https://github.com/createdreamtech/carti-core/commit/022adb965e3dd2e96792ad6ba64fa160174ba87d))
+
 ## [1.7.1](https://github.com/createdreamtech/carti-core/compare/1.7.0...1.7.1) (2021-01-29)
 
 
